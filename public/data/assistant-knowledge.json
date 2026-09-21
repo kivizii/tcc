@@ -1,0 +1,85 @@
+{
+  "suggestedMessages": [
+    "Quais são meus direitos?",
+    "Como funciona a DEAM?",
+    "O que é medida protetiva?",
+    "Posso ligar para o 180?"
+  ],
+  "welcomeMessage": "Olá! Sou a Assistente Zela. Estou aqui 24 horas para orientar sobre seus direitos, canais de apoio e tipos de violência. Como posso ajudar?",
+  "systemContext": "A Zela é uma plataforma de apoio feminino. Canais oficiais: 180 (Central da Mulher, 24h), 190 (emergência), 197 (Polícia Civil), 188 (CVV apoio emocional), DEAM (Delegacia Especializada de Atendimento à Mulher). Lei Maria da Penha (Lei 11.340/2006): garante medidas protetivas, afastamento do agressor, atendimento especializado; violência doméstica é crime. Tipos de violência: física, psicológica, sexual, patrimonial, moral. A assistente não substitui advogada; em risco imediato orientar 190 ou 180.",
+  "topics": [
+    {
+      "keywords": ["180", "central da mulher", "ligar", "telefone", "denunciar", "denúncia"],
+      "answer": "O **180** é a Central de Atendimento à Mulher — gratuito, sigiloso e disponível **24 horas** por telefone. Você pode ligar para orientação, denúncia ou encaminhamento. Também há atendimento por chat no site oficial. Se estiver em risco imediato, ligue **190**."
+    },
+    {
+      "keywords": ["190", "polícia", "emergência", "emergencia", "perigo agora"],
+      "answer": "Ligue **190** (Polícia Militar) em **emergência** ou risco imediato. Peça para ir a um local seguro, se possível. O **180** também funciona 24h para orientação sobre violência contra a mulher."
+    },
+    {
+      "keywords": ["188", "cvv", "suicídio", "suicidio", "quero morrer", "vontade de morrer"],
+      "answer": "O **188** (CVV) oferece apoio emocional **24 horas**, gratuito e sigiloso. Você não precisa enfrentar isso sozinha. Se houver violência ou risco físico, ligue também **180** ou **190**."
+    },
+    {
+      "keywords": ["deam", "delegacia", "boletim", "registrar", "ocorrência", "ocorrencia"],
+      "answer": "A **DEAM** (Delegacia Especializada de Atendimento à Mulher) atende casos de violência contra a mulher com equipe preparada. Você pode registrar boletim de ocorrência. Na dúvida, ligue **190** para orientação ou **180** para saber a unidade mais próxima. Se possível, leve alguém de confiança."
+    },
+    {
+      "keywords": ["maria da penha", "lei", "direitos", "meus direitos", "quais direitos"],
+      "answer": "A **Lei Maria da Penha** (Lei nº 11.340/2006) protege mulheres contra violência doméstica e familiar. Entre seus direitos: **medidas protetivas**, afastamento do agressor, atendimento especializado e proteção física e psicológica. A violência doméstica é **crime** — você tem direito a denunciar e ser protegida."
+    },
+    {
+      "keywords": ["medida protetiva", "medidas protetivas", "afastamento", "restritiva"],
+      "answer": "**Medidas protetivas** podem incluir afastamento do agressor, proibição de contato e aproximação. São solicitadas na delegacia ou via Ministério Público/Justiça. Na DEAM ou com orientação do **180**, você pode dar os primeiros passos. Leve documentos e relato do que aconteceu, se tiver."
+    },
+    {
+      "keywords": ["violência física", "violencia fisica", "bate", "agrediu", "agressão", "agressao", "tapas", "empurr"],
+      "answer": "Violência **física** inclui agressões, empurrões, tapas e uso de objetos. É crime previsto na Lei Maria da Penha. Procure a **DEAM** ou ligue **190** se estiver em perigo agora. O **180** orienta sobre denúncia e proteção."
+    },
+    {
+      "keywords": ["violência psicológica", "violencia psicologica", "humilha", "ameaça", "ameaca", "controla", "isol"],
+      "answer": "Violência **psicológica** inclui humilhação, ameaças, isolamento e controle. Também é reconhecida pela Lei Maria da Penha. Documentar mensagens e relatos pode ajudar. O **180** e a **DEAM** orientam sobre seus direitos e medidas de proteção."
+    },
+    {
+      "keywords": ["violência sexual", "violencia sexual", "estupro", "abuso"],
+      "answer": "Violência **sexual** é qualquer ato sem consentimento — é crime. Você pode procurar a DEAM, hospital com serviço de referência e ligar **180** ou **190**. Não é culpa sua. Atendimento deve ser acolhedor e respeitoso."
+    },
+    {
+      "keywords": ["violência patrimonial", "violencia patrimonial", "dinheiro", "controle financeiro", "destruiu"],
+      "answer": "Violência **patrimonial** envolve destruição de bens ou controle financeiro. Também se enquadra na Lei Maria da Penha. Registre o que puder e busque orientação no **180** ou na DEAM."
+    },
+    {
+      "keywords": ["197", "polícia civil", "policia civil"],
+      "answer": "O **197** é o telefone da Polícia Civil. Para registrar ocorrência ou investigação, a **DEAM** é o canal especializado para violência contra a mulher. Em emergência imediata, ligue **190**."
+    },
+    {
+      "keywords": ["mapa", "onde ir", "local", "hospital", "apoio presencial", "presencial"],
+      "answer": "No app Zela, o **Mapa de apoio** mostra DEAM, hospitais, Casa da Mulher Brasileira e outros locais em São Paulo. Use o menu Mapa ou acesse pela home."
+    },
+    {
+      "keywords": ["advogada", "advogado", "jurídico", "juridico", "processo", "justiça", "justica"],
+      "answer": "Para orientação jurídica personalizada, procure a Defensoria Pública, OAB local ou serviços da DEAM. Eu posso informar **direitos gerais** e canais oficiais, mas **não substituo** uma advogada. O **180** também orienta sobre encaminhamentos."
+    },
+    {
+      "keywords": ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite", "ajuda"],
+      "answer": "Olá! Estou aqui para orientar sobre **direitos**, **canais de apoio** (180, 190, DEAM) e **tipos de violência**. Pode perguntar no seu ritmo. Em risco imediato, ligue **190** ou **180**."
+    }
+  ],
+  "crisisKeywords": [
+    "me bateu agora",
+    "está me batendo",
+    "esta me batendo",
+    "estou em perigo",
+    "ele vai me matar",
+    "ela vai me matar",
+    "quero me matar",
+    "vou me matar",
+    "preciso de ajuda urgente",
+    "socorro",
+    "me ajuda agora",
+    "estou sangrando",
+    "armado",
+    "com arma"
+  ],
+  "crisisResponse": "Sinto muito que você esteja passando por isso. **Sua segurança vem primeiro.**\n\n• Ligue **190** (Polícia) se estiver em **perigo agora**\n• Ligue **180** (Central da Mulher, 24h) para orientação imediata\n• Ligue **188** (CVV) se precisar de apoio emocional\n\nSe puder, vá a um local seguro ou peça ajuda a alguém de confiança. Use o botão **SOS** no app para alertar contatos cadastrados."
+}

@@ -12,3 +12,6 @@ Object.assign(window.ZL.firebaseConfig, {
   messagingSenderId: "123456789",
   appId: "1:123456789:web:abcdef",
 });
+
+/** URL da Cloud Function assistantChat após deploy (ex.: https://us-central1-seu-projeto.cloudfunctions.net/assistantChat) */
+window.ZL.assistantFunctionUrl = "";
