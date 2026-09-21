@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistente Zela — 24h</title>
+  <script src="../js/bootstrap.js" data-depth="1"></script>
+</head>
+<body data-page="assistant" data-no-assistant-widget="true">
+  <main class="app-shell assistant-page">
+    <header class="assistant-page__header">
+      <div class="assistant-page__title-row">
+        <h1 class="page-title">Assistente Zela</h1>
+        <span class="assistant-page__badge">Disponível 24h</span>
+      </div>
+      <p class="page-subtitle">Tire dúvidas sobre seus direitos, canais de apoio e tipos de violência.</p>
+    </header>
+
+    <div class="alert alert--info assistant-page__disclaimer">
+      Orientação informativa — não substitui advogada ou atendimento de emergência.
+      Em risco imediato, ligue <strong>190</strong> ou <strong>180</strong>.
+    </div>
+
+    <section class="assistant-page__chat card" aria-label="Conversa com a Assistente Zela">
+      <div id="assistant-chat-root">
+        <p class="chat-system-message" role="status">Carregando assistente...</p>
+      </div>
+    </section>
+
+    <section class="assistant-page__shortcuts" aria-label="Atalhos de apoio">
+      <a href="../emergency/sos.html" class="btn btn--sos btn--block">SOS — Preciso de ajuda</a>
+      <a href="../map/index.html" class="btn btn--secondary btn--block">Mapa de apoio</a>
+      <a href="../info/educativo.html" class="btn btn--ghost btn--block">Direitos e canais</a>
+    </section>
+  </main>
+</body>
+</html>

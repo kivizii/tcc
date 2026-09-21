@@ -16,6 +16,22 @@ npx --yes serve public -p 3000
 
 Abra `http://localhost:3000`. O app roda em **modo demonstração** com `localStorage` — o Firebase aparece no projeto apenas como **referência arquitetural** para a simulação do TCC, sem projeto real configurado.
 
+### Assistente Zela (IA)
+
+A **Assistente Zela** (`support/assistente.html`) responde dúvidas sobre direitos femininos 24h. Há um **balãozinho flutuante** em todas as telas.
+
+- **Modo demo (padrão):** respostas automáticas locais por FAQ (`public/data/assistant-knowledge.json`)
+- **Modo produção:** Cloud Function `assistantChat` + Gemini (chave só no backend)
+
+Configuração:
+
+1. Copie `.env.example` para `.env` e preencha Firebase + `GEMINI_API_KEY`
+2. `cd functions && npm install`
+3. `firebase functions:secrets:set GEMINI_API_KEY`
+4. `firebase deploy --only functions,hosting`
+5. Defina `window.ZL.assistantFunctionUrl` em `public/js/firebase-config.local.js` (não commitado) com a URL da function
+
+
 ## Deploy
 
 - **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`. URL: https://kivizii.github.io/tcc-zela/ (requer Pages habilitado em Settings → Source: GitHub Actions).
@@ -54,6 +70,7 @@ A Zela é uma proposta de plataforma digital (e rede de apoio) para que mulheres
 | Chaveiro de emergência | Botão disfarçado que alerta mulheres próximas, compartilha localização e aciona a rede de apoio |
 | Apoio psicológico | Atendimento a ansiedade, medo, autoestima, violência psicológica e outros temas |
 | Chat feminino | Espaço moderado de conversa, amizade e pedido de ajuda |
+| Assistente Zela 24h | Chat 1-a-1 com respostas automáticas sobre direitos (FAQ local + IA via Gemini) |
 | Mural de relatos | Histórias de superação, violência, maternidade solo e recomeços |
 | Histórico de agressores | Denúncias e registros alinhados à legislação de privacidade |
 | Sede de segurança | Acolhimento presencial, psicológico, jurídico e orientações |

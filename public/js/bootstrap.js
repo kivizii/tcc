@@ -16,7 +16,7 @@
     depth,
   };
 
-  const ASSET_VERSION = "28";
+  const ASSET_VERSION = "33";
 
   const robots = document.createElement("meta");
   robots.name = "robots";
@@ -56,6 +56,8 @@
     "js/quick-exit.js",
     "js/auth.js",
     "js/profile.js",
+    "js/assistant.js",
+    "js/assistant-widget.js",
   ];
 
   (async () => {

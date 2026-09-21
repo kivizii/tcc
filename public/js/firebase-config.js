@@ -15,6 +15,8 @@ window.ZL.firebaseConfig = {
 window.ZL.demoMode = true;
 window.ZL.db = null;
 window.ZL.auth = null;
+/** URL HTTPS da Cloud Function assistantChat (configure após deploy). */
+window.ZL.assistantFunctionUrl = "";
 
 const DEMO_PREFIX = "zela_demo_";
 
