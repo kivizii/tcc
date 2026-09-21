@@ -1,5 +1,5 @@
 /**
- * Biblioteca de ícones SVG FEMHELP — stroke simples, cor via currentColor.
+ * Biblioteca de ícones SVG Zela — stroke simples, cor via currentColor.
  */
 (function () {
   const ICONS = {
@@ -34,9 +34,9 @@
     return `<svg class="${className}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
   }
 
-  window.FH = window.FH || {};
-  window.FH.icon = icon;
-  window.FH.ICONS = Object.keys(ICONS);
+  window.ZL = window.ZL || {};
+  window.ZL.icon = icon;
+  window.ZL.ICONS = Object.keys(ICONS);
 
   function hydrateIcons() {
     document.querySelectorAll("[data-icon]").forEach((el) => {

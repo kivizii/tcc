@@ -1,9 +1,9 @@
 /**
  * Configuração Firebase + modo demonstração (localStorage).
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
-window.FH.firebaseConfig = {
+window.ZL.firebaseConfig = {
   apiKey: "",
   authDomain: "",
   projectId: "",
@@ -12,13 +12,13 @@ window.FH.firebaseConfig = {
   appId: "",
 };
 
-window.FH.demoMode = true;
-window.FH.db = null;
-window.FH.auth = null;
+window.ZL.demoMode = true;
+window.ZL.db = null;
+window.ZL.auth = null;
 
-const DEMO_PREFIX = "femhelp_demo_";
+const DEMO_PREFIX = "zela_demo_";
 
-window.FH.storage = {
+window.ZL.storage = {
   get(key, fallback = null) {
     try {
       const raw = localStorage.getItem(DEMO_PREFIX + key);
@@ -45,21 +45,21 @@ window.FH.storage = {
   },
 };
 
-window.FH.resetDemoData = function () {
+window.ZL.resetDemoData = function () {
   for (let i = localStorage.length - 1; i >= 0; i--) {
     const key = localStorage.key(i);
     if (key && key.startsWith(DEMO_PREFIX)) {
       localStorage.removeItem(key);
     }
   }
-  if (typeof window.FH.clearCommunitiesCache === "function") {
-    window.FH.clearCommunitiesCache();
+  if (typeof window.ZL.clearCommunitiesCache === "function") {
+    window.ZL.clearCommunitiesCache();
   }
 };
 
-window.FH.clearDemoLogins = function () {
-  window.FH.storage.remove("users");
-  window.FH.storage.remove("currentUser");
+window.ZL.clearDemoLogins = function () {
+  window.ZL.storage.remove("users");
+  window.ZL.storage.remove("currentUser");
   for (let i = localStorage.length - 1; i >= 0; i--) {
     const key = localStorage.key(i);
     if (key && key.startsWith(DEMO_PREFIX + "profile_")) {
@@ -69,7 +69,7 @@ window.FH.clearDemoLogins = function () {
 };
 
 /** Exporta todas as chaves demo do localStorage (mesma lógica do plano de migração). */
-window.FH.exportDemoData = function () {
+window.ZL.exportDemoData = function () {
   const data = {};
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -81,7 +81,7 @@ window.FH.exportDemoData = function () {
 };
 
 /** Importa JSON exportado; retorna quantidade de chaves gravadas. */
-window.FH.importDemoData = function (json) {
+window.ZL.importDemoData = function (json) {
   const data = JSON.parse(json);
   let count = 0;
   for (const [key, value] of Object.entries(data)) {
@@ -94,8 +94,8 @@ window.FH.importDemoData = function (json) {
 };
 
 /** Copia export para a área de transferência ou faz download. */
-window.FH.copyDemoExport = async function () {
-  const json = window.FH.exportDemoData();
+window.ZL.copyDemoExport = async function () {
+  const json = window.ZL.exportDemoData();
   const parsed = JSON.parse(json);
   const count = Object.keys(parsed).length;
   if (count === 0) {
@@ -109,7 +109,7 @@ window.FH.copyDemoExport = async function () {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "femhelp-demo-backup.json";
+  link.download = "zela-demo-backup.json";
   link.click();
   URL.revokeObjectURL(url);
   return { count, method: "download" };
@@ -120,7 +120,7 @@ window.FH.copyDemoExport = async function () {
   if (!/[?&]clearLogins(?:&|=|$)/.test(search) && !search.startsWith("?clearLogins")) {
     return;
   }
-  window.FH.clearDemoLogins();
+  window.ZL.clearDemoLogins();
   try {
     const url = new URL(window.location.href);
     url.searchParams.delete("clearLogins");
@@ -129,16 +129,16 @@ window.FH.copyDemoExport = async function () {
   } catch {
     /* file:// may block replaceState */
   }
-  console.info("FEMHELP: logins de teste apagados.");
+  console.info("Zela: logins de teste apagados.");
 })();
 
 async function initFirebase() {
-  const config = window.FH.firebaseConfig;
+  const config = window.ZL.firebaseConfig;
   const hasConfig = config.apiKey && config.projectId;
 
   if (!hasConfig) {
-    console.info("FEMHELP: modo demonstração (localStorage). Configure firebase-config.local.js para Firebase real.");
-    window.FH.demoMode = true;
+    console.info("Zela: modo demonstração (localStorage). Configure firebase-config.local.js para Firebase real.");
+    window.ZL.demoMode = true;
     return;
   }
 
@@ -154,15 +154,15 @@ async function initFirebase() {
     );
 
     const app = initializeApp(config);
-    window.FH.auth = getAuth(app);
-    window.FH.db = getFirestore(app);
-    window.FH.demoMode = false;
-    console.info("FEMHELP: Firebase conectado.");
+    window.ZL.auth = getAuth(app);
+    window.ZL.db = getFirestore(app);
+    window.ZL.demoMode = false;
+    console.info("Zela: Firebase conectado.");
   } catch (err) {
-    console.warn("FEMHELP: Firebase indisponível, usando modo demo.", err);
-    window.FH.demoMode = true;
+    console.warn("Zela: Firebase indisponível, usando modo demo.", err);
+    window.ZL.demoMode = true;
   }
 }
 
-window.FH.initFirebase = initFirebase;
+window.ZL.initFirebase = initFirebase;
 initFirebase();

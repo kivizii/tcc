@@ -1,7 +1,7 @@
 /**
  * Comunidades de chat — listagem, criação (demo) e painel centralizado.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const COMMUNITIES_JSON_VERSION = 9;
 const USER_COMMUNITIES_KEY = "user_communities";
@@ -10,7 +10,7 @@ const DEFAULT_ROOM_ID = "amizade";
 
 let communitiesCache = null;
 
-window.FH.clearCommunitiesCache = function () {
+window.ZL.clearCommunitiesCache = function () {
   communitiesCache = null;
 };
 
@@ -31,16 +31,16 @@ function slugify(name) {
   return `${base || "comunidade"}-${Date.now()}`;
 }
 
-window.FH.getRoomFromUrl = function () {
+window.ZL.getRoomFromUrl = function () {
   const params = new URLSearchParams(window.location.search);
   return params.get("room") || DEFAULT_ROOM_ID;
 };
 
-window.FH.getChatUrl = function (roomId) {
-  return `${window.FH.asset("community/chat.html")}?room=${encodeURIComponent(roomId)}`;
+window.ZL.getChatUrl = function (roomId) {
+  return `${window.ZL.asset("community/chat.html")}?room=${encodeURIComponent(roomId)}`;
 };
 
-window.FH.getChatRoomQueryUrl = function (roomId) {
+window.ZL.getChatRoomQueryUrl = function (roomId) {
   return `?room=${encodeURIComponent(roomId)}`;
 };
 
@@ -48,26 +48,26 @@ function joinedStorageKey(roomId) {
   return `chat_joined_${roomId}`;
 }
 
-window.FH.isCommunityJoined = function (roomId) {
-  return window.FH.storage.get(joinedStorageKey(roomId), false) === true;
+window.ZL.isCommunityJoined = function (roomId) {
+  return window.ZL.storage.get(joinedStorageKey(roomId), false) === true;
 };
 
-window.FH.joinCommunity = function (roomId, options = {}) {
-  if (!window.FH.storage.set(joinedStorageKey(roomId), true)) {
+window.ZL.joinCommunity = function (roomId, options = {}) {
+  if (!window.ZL.storage.set(joinedStorageKey(roomId), true)) {
     return false;
   }
   if (!options.silent) {
-    document.dispatchEvent(new CustomEvent("femhelp:chat-join-changed", { detail: { roomId, joined: true } }));
+    document.dispatchEvent(new CustomEvent("zela:chat-join-changed", { detail: { roomId, joined: true } }));
   }
   return true;
 };
 
 function getCuratedFallback() {
-  return window.FH.CURATED_COMMUNITIES_FALLBACK || [];
+  return window.ZL.CURATED_COMMUNITIES_FALLBACK || [];
 }
 
 function mergeCommunities(curated) {
-  const userCreated = window.FH.storage.get(USER_COMMUNITIES_KEY, []);
+  const userCreated = window.ZL.storage.get(USER_COMMUNITIES_KEY, []);
   const seen = new Set(curated.map((c) => c.id));
   const merged = [...curated];
   userCreated.forEach((c) => {
@@ -79,8 +79,8 @@ function mergeCommunities(curated) {
   return merged;
 }
 
-window.FH.loadCommunities = async function () {
-  const storedVersion = window.FH.storage.get(COMMUNITIES_VERSION_KEY, null);
+window.ZL.loadCommunities = async function () {
+  const storedVersion = window.ZL.storage.get(COMMUNITIES_VERSION_KEY, null);
   if (storedVersion !== COMMUNITIES_JSON_VERSION) {
     communitiesCache = null;
   }
@@ -89,13 +89,13 @@ window.FH.loadCommunities = async function () {
 
   let curated = [];
   try {
-    const url = `${window.FH.asset("data/communities.json")}?v=${COMMUNITIES_JSON_VERSION}`;
+    const url = `${window.ZL.asset("data/communities.json")}?v=${COMMUNITIES_JSON_VERSION}`;
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     curated = data.communities || [];
   } catch (err) {
-    console.warn("FEMHELP: fetch de communities.json falhou; usando fallback embutido.", err);
+    console.warn("Zela: fetch de communities.json falhou; usando fallback embutido.", err);
     curated = getCuratedFallback();
     if (!curated.length) {
       throw new Error("Não foi possível carregar as comunidades.");
@@ -103,16 +103,16 @@ window.FH.loadCommunities = async function () {
   }
 
   communitiesCache = mergeCommunities(curated);
-  window.FH.storage.set(COMMUNITIES_VERSION_KEY, COMMUNITIES_JSON_VERSION);
+  window.ZL.storage.set(COMMUNITIES_VERSION_KEY, COMMUNITIES_JSON_VERSION);
   return communitiesCache;
 };
 
-window.FH.getCommunityById = async function (roomId) {
-  const list = await window.FH.loadCommunities();
+window.ZL.getCommunityById = async function (roomId) {
+  const list = await window.ZL.loadCommunities();
   return list.find((c) => c.id === roomId) || null;
 };
 
-window.FH.createCommunity = function ({ name, description, type }) {
+window.ZL.createCommunity = function ({ name, description, type }) {
   const trimmedName = (name || "").trim();
   if (trimmedName.length < 3) {
     throw new Error("O nome da comunidade deve ter pelo menos 3 caracteres.");
@@ -128,9 +128,9 @@ window.FH.createCommunity = function ({ name, description, type }) {
     seedMessages: [],
   };
 
-  const userCommunities = window.FH.storage.get(USER_COMMUNITIES_KEY, []);
+  const userCommunities = window.ZL.storage.get(USER_COMMUNITIES_KEY, []);
   userCommunities.push(community);
-  window.FH.storage.set(USER_COMMUNITIES_KEY, userCommunities);
+  window.ZL.storage.set(USER_COMMUNITIES_KEY, userCommunities);
   communitiesCache = null;
 
   return community;
@@ -152,13 +152,13 @@ function getLastSeedPreview(community) {
 function renderCommunityBrowseCard(community, activeRoomId, options = {}) {
   const isActive = activeRoomId === community.id;
   const isAlert = community.type === "alert";
-  const isJoined = window.FH.isCommunityJoined?.(community.id) ?? false;
+  const isJoined = window.ZL.isCommunityJoined?.(community.id) ?? false;
   const iconName = community.icon || (isAlert ? "alert" : "chat");
   const memberLabel = formatMemberCountLabel(community.memberCount);
   const preview = getLastSeedPreview(community);
   const cardClass = `community-card${isActive ? " community-card--active" : ""}${isJoined ? " community-card--joined" : ""}${isAlert ? " community-card--alert" : ""}`;
   const cardBody = `
-      <span class="community-card__icon">${window.FH.icon(iconName, "icon icon--shortcut", 20)}</span>
+      <span class="community-card__icon">${window.ZL.icon(iconName, "icon icon--shortcut", 20)}</span>
       <span class="community-card__body">
         <span class="community-card__header">
           <span class="community-card__name">${escapeHtml(community.name)}</span>
@@ -173,7 +173,7 @@ function renderCommunityBrowseCard(community, activeRoomId, options = {}) {
   if (options.chatPage) {
     return `
     <a
-      href="${window.FH.getChatRoomQueryUrl(community.id)}"
+      href="${window.ZL.getChatRoomQueryUrl(community.id)}"
       class="${cardClass}"
       data-room-id="${escapeHtml(community.id)}"
       ${isActive ? 'aria-current="page"' : ""}
@@ -184,7 +184,7 @@ function renderCommunityBrowseCard(community, activeRoomId, options = {}) {
 
   return `
     <a
-      href="${window.FH.getChatUrl(community.id)}"
+      href="${window.ZL.getChatUrl(community.id)}"
       class="${cardClass}"
       data-room-id="${escapeHtml(community.id)}"
       ${isActive ? 'aria-current="page"' : ""}
@@ -200,10 +200,10 @@ function renderCommunityItem(community, activeRoomId, variant) {
   const isCompact = variant === "compact";
 
   if (isCompact) {
-    const isJoined = window.FH.isCommunityJoined?.(community.id) ?? false;
+    const isJoined = window.ZL.isCommunityJoined?.(community.id) ?? false;
     return `
       <a
-        href="${window.FH.getChatUrl(community.id)}"
+        href="${window.ZL.getChatUrl(community.id)}"
         class="community-pill${isActive ? " community-pill--active" : ""}${isAlert ? " community-pill--alert" : ""}${isJoined ? " community-pill--joined" : ""}"
         ${isActive ? 'aria-current="page"' : ""}
       >
@@ -214,11 +214,11 @@ function renderCommunityItem(community, activeRoomId, variant) {
 
   return `
     <a
-      href="${window.FH.getChatUrl(community.id)}"
+      href="${window.ZL.getChatUrl(community.id)}"
       class="community-item${isActive ? " community-item--active" : ""}${isAlert ? " community-item--alert" : ""}"
       ${isActive ? 'aria-current="page"' : ""}
     >
-      <span class="community-item__icon">${window.FH.icon(iconName, "icon icon--shortcut", 20)}</span>
+      <span class="community-item__icon">${window.ZL.icon(iconName, "icon icon--shortcut", 20)}</span>
       <span class="community-item__body">
         <span class="community-item__name">${escapeHtml(community.name)}</span>
         <span class="community-item__desc">${escapeHtml(community.description)}</span>
@@ -281,11 +281,11 @@ function bindCreateForm(container) {
     e.preventDefault();
     if (errorEl) errorEl.textContent = "";
 
-    const user = window.FH.getCurrentUser();
+    const user = window.ZL.getCurrentUser();
     if (!user) {
       const redirect = window.location.pathname + window.location.search;
       window.location.href =
-        window.FH.asset("auth/login.html") + "?redirect=" + encodeURIComponent(redirect);
+        window.ZL.asset("auth/login.html") + "?redirect=" + encodeURIComponent(redirect);
       return;
     }
 
@@ -294,20 +294,20 @@ function bindCreateForm(container) {
     const type = form.querySelector("#community-type")?.value || "chat";
 
     try {
-      const community = window.FH.createCommunity({ name, description, type });
-      window.FH.joinCommunity(community.id, { silent: true });
-      if (document.body.dataset.page === "chat" && typeof window.FH.openChatRoom === "function") {
-        window.FH.openChatRoom(community.id);
+      const community = window.ZL.createCommunity({ name, description, type });
+      window.ZL.joinCommunity(community.id, { silent: true });
+      if (document.body.dataset.page === "chat" && typeof window.ZL.openChatRoom === "function") {
+        window.ZL.openChatRoom(community.id);
         return;
       }
-      window.location.href = window.FH.getChatUrl(community.id);
+      window.location.href = window.ZL.getChatUrl(community.id);
     } catch (err) {
       if (errorEl) errorEl.textContent = err.message || "Não foi possível criar a comunidade.";
     }
   });
 }
 
-window.FH.renderCommunitiesPanel = async function (container, options = {}) {
+window.ZL.renderCommunitiesPanel = async function (container, options = {}) {
   if (!container) return;
 
   const {
@@ -319,7 +319,7 @@ window.FH.renderCommunitiesPanel = async function (container, options = {}) {
   container.innerHTML = '<p class="text-muted communities-panel__loading">Carregando comunidades...</p>';
 
   try {
-    const communities = await window.FH.loadCommunities();
+    const communities = await window.ZL.loadCommunities();
 
     if (variant === "browse") {
       const isChatPage = document.body.dataset.page === "chat";
@@ -384,24 +384,24 @@ window.FH.renderCommunitiesPanel = async function (container, options = {}) {
   }
 };
 
-document.addEventListener("femhelp:ready", async () => {
+document.addEventListener("zela:ready", async () => {
   const panel = document.getElementById("communities-panel");
   if (!panel) return;
 
   const isChatPage = document.body.dataset.page === "chat";
-  await window.FH.renderCommunitiesPanel(panel, {
-    activeRoomId: isChatPage ? null : window.FH.getRoomFromUrl?.(),
+  await window.ZL.renderCommunitiesPanel(panel, {
+    activeRoomId: isChatPage ? null : window.ZL.getRoomFromUrl?.(),
     showCreateForm: true,
     variant: "browse",
   });
 });
 
-document.addEventListener("femhelp:chat-join-changed", async () => {
+document.addEventListener("zela:chat-join-changed", async () => {
   const panel = document.getElementById("communities-panel");
   const browseEl = document.getElementById("chat-browse-view");
   if (!panel || document.body.dataset.page !== "chat" || !browseEl?.classList.contains("chat-view--active")) return;
 
-  await window.FH.renderCommunitiesPanel(panel, {
+  await window.ZL.renderCommunitiesPanel(panel, {
     activeRoomId: null,
     showCreateForm: true,
     variant: "browse",

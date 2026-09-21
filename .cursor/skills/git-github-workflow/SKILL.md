@@ -1,13 +1,13 @@
 ---
 name: git-github-workflow
 description: >-
-  Aplica o fluxo Git/GitHub do FEMHELP (branch, commit Conventional Commits,
+  Aplica o fluxo Git/GitHub do Zela (branch, commit Conventional Commits,
   pull request e merge). Use when the user asks to commit, criar branch, merge,
   pull request, PR, push, rebase, resolver conflito, ou trabalhar no GitHub deste
   repositório.
 ---
 
-# Git e GitHub — FEMHELP
+# Git e GitHub — Zela
 
 Repositório em equipe (Heloise, Lia, Geovana). Trabalho sempre em **branch**; `main` só recebe mudança via **Pull Request**.
 

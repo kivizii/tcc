@@ -18,7 +18,7 @@
     btn.textContent = "Sair";
 
     btn.addEventListener("click", () => {
-      window.location.replace(window.FH.asset(EXIT_URL));
+      window.location.replace(window.ZL.asset(EXIT_URL));
     });
 
     const header = document.querySelector(".app-header");

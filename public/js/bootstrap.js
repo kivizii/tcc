@@ -8,7 +8,7 @@
   const depth = parseInt(script?.dataset?.depth || "0", 10);
   const root = depth === 0 ? "" : "../".repeat(depth);
 
-  window.FH = {
+  window.ZL = {
     root,
     asset(path) {
       return root + path;
@@ -16,7 +16,7 @@
     depth,
   };
 
-  const ASSET_VERSION = "27";
+  const ASSET_VERSION = "28";
 
   const robots = document.createElement("meta");
   robots.name = "robots";
@@ -70,14 +70,14 @@
         try {
           await loadScript(src);
         } catch (err) {
-          console.error(`FEMHELP: falha ao carregar ${src}`, err);
+          console.error(`Zela: falha ao carregar ${src}`, err);
         }
       }
       const notifyReady = () => {
-        if (typeof window.FH.onReady === "function") {
-          window.FH.onReady();
+        if (typeof window.ZL.onReady === "function") {
+          window.ZL.onReady();
         }
-        document.dispatchEvent(new CustomEvent("femhelp:ready"));
+        document.dispatchEvent(new CustomEvent("zela:ready"));
       };
 
       if (document.readyState === "loading") {
@@ -86,7 +86,7 @@
         notifyReady();
       }
     } catch (err) {
-      console.error("FEMHELP bootstrap error:", err);
+      console.error("Zela bootstrap error:", err);
     }
   })();
 })();

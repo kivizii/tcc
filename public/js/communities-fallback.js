@@ -1,6 +1,6 @@
 /** Fallback embutido — usado quando fetch de communities.json falha. */
-window.FH = window.FH || {};
-window.FH.CURATED_COMMUNITIES_FALLBACK = [
+window.ZL = window.ZL || {};
+window.ZL.CURATED_COMMUNITIES_FALLBACK = [
   {
     "id": "amizade",
     "name": "Amizade e acolhimento",

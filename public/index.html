@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FEMHELP — plataforma de apoio, acolhimento e segurança feminina">
-  <title>FEMHELP — Início</title>
+  <meta name="description" content="Zela — Zela por ela. Plataforma de apoio, acolhimento e segurança feminina">
+  <title>Zela — Zela por ela</title>
   <script src="js/bootstrap.js" data-depth="0" data-modules="js/communities.js"></script>
 </head>
 <body data-page="home">
@@ -14,7 +14,7 @@
         <button type="button" class="home-welcome__avatar-btn" id="home-profile-avatar" aria-label="Ver meu perfil" hidden></button>
         <div class="home-welcome__copy">
           <p class="home-welcome__greeting" id="home-greeting">Bem-vinda</p>
-          <p class="home-welcome__text">Seu espaço seguro de apoio, proteção e acolhimento feminino.</p>
+          <p class="home-welcome__text">Zela por ela — seu espaço seguro de apoio, proteção e acolhimento feminino.</p>
         </div>
       </div>
     </section>
@@ -114,7 +114,7 @@
         <li class="home-menu__item">
           <a href="info/sobre.html" class="home-menu__link">
             <span class="home-menu__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
-            <span class="home-menu__label">Sobre a FEMHELP</span>
+            <span class="home-menu__label">Sobre a Zela</span>
           </a>
         </li>
       </ul>
@@ -122,18 +122,18 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
+    document.addEventListener("zela:ready", () => {
       const greeting = document.getElementById("home-greeting");
       const avatarBtn = document.getElementById("home-profile-avatar");
 
       function renderHomeProfile() {
-        const user = window.FH.getCurrentUser();
+        const user = window.ZL.getCurrentUser();
         if (user && greeting) {
           greeting.textContent = "Olá, " + (user.displayName || "bem-vinda");
         }
         if (!avatarBtn) return;
-        if (user && typeof window.FH.getAvatarMarkup === "function") {
-          avatarBtn.innerHTML = window.FH.getAvatarMarkup(user, "lg");
+        if (user && typeof window.ZL.getAvatarMarkup === "function") {
+          avatarBtn.innerHTML = window.ZL.getAvatarMarkup(user, "lg");
           avatarBtn.hidden = false;
         } else {
           avatarBtn.innerHTML = "";
@@ -143,17 +143,17 @@
 
       if (avatarBtn) {
         avatarBtn.addEventListener("click", () => {
-          if (window.FH.getCurrentUser()) {
-            window.FH.showProfileModal();
+          if (window.ZL.getCurrentUser()) {
+            window.ZL.showProfileModal();
           } else {
-            window.location.href = window.FH.asset("auth/login.html");
+            window.location.href = window.ZL.asset("auth/login.html");
           }
         });
       }
 
       renderHomeProfile();
-      document.addEventListener("femhelp:profile-updated", renderHomeProfile);
-      window.FH.onAuthChange?.(renderHomeProfile);
+      document.addEventListener("zela:profile-updated", renderHomeProfile);
+      window.ZL.onAuthChange?.(renderHomeProfile);
     });
   </script>
 </body>

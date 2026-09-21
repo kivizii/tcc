@@ -1,8 +1,8 @@
-# Roteiro de defesa — FEMHELP (10–15 min)
+# Roteiro de defesa — Zela · Zela por ela (10–15 min)
 
 ## 1. Contexto (2 min)
 
-- Apresentar a FEMHELP: missão, visão e valores
+- Apresentar a Zela: missão, visão e valores
 - Público-alvo: mulheres em vulnerabilidade, mães solo, vítimas de violência
 - Enquadramento legal: Lei Maria da Penha, LGPD, Lei do Feminicídio
 

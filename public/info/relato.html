@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrar relato — FEMHELP</title>
+  <title>Registrar relato — Zela</title>
   <script src="../js/bootstrap.js" data-depth="1"></script>
 </head>
 <body>
@@ -49,17 +49,17 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
+    document.addEventListener("zela:ready", () => {
       const form = document.getElementById("relato-form");
       const listEl = document.getElementById("relatos-salvos");
-      const user = window.FH.getCurrentUser();
+      const user = window.ZL.getCurrentUser();
 
       function renderRelatos() {
         if (!user) {
           listEl.innerHTML = '<p class="text-muted">Faça login para ver seus relatos salvos.</p>';
           return;
         }
-        const relatos = window.FH.storage.get(`relatos_${user.uid}`, []);
+        const relatos = window.ZL.storage.get(`relatos_${user.uid}`, []);
         if (relatos.length === 0) {
           listEl.innerHTML = '<p class="text-muted">Nenhum relato registrado.</p>';
           return;
@@ -76,7 +76,7 @@
         e.preventDefault();
         if (!user) {
           alert("Faça login para registrar um relato.");
-          window.location.href = window.FH.asset("auth/login.html");
+          window.location.href = window.ZL.asset("auth/login.html");
           return;
         }
         const relato = {
@@ -85,9 +85,9 @@
           descricao: form.descricao.value.trim(),
           createdAt: new Date().toISOString(),
         };
-        const relatos = window.FH.storage.get(`relatos_${user.uid}`, []);
+        const relatos = window.ZL.storage.get(`relatos_${user.uid}`, []);
         relatos.unshift(relato);
-        window.FH.storage.set(`relatos_${user.uid}`, relatos);
+        window.ZL.storage.set(`relatos_${user.uid}`, relatos);
         form.reset();
         alert("Relato registrado com segurança.");
         renderRelatos();

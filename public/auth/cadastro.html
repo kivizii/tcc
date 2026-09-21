@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro — FEMHELP</title>
+  <title>Cadastro — Zela</title>
   <script src="../js/bootstrap.js" data-depth="1" data-modules="js/cpf.js"></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
       <div class="form-group">
         <label class="form-label">
           <input type="checkbox" name="isWoman" required>
-          Confirmo que sou mulher e que o FEMHELP é um espaço de apoio exclusivo para mulheres.
+          Confirmo que sou mulher e que a Zela é um espaço de apoio exclusivo para mulheres.
         </label>
       </div>
       <div class="form-group">
@@ -50,11 +50,11 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
+    document.addEventListener("zela:ready", () => {
       const form = document.getElementById("register-form");
       const errEl = document.getElementById("register-error");
 
-      window.FH.bindCpfInput(form.cpf);
+      window.ZL.bindCpfInput(form.cpf);
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -71,7 +71,7 @@
           errEl.classList.remove("hidden");
           return;
         }
-        if (!window.FH.validateCpf(cpf)) {
+        if (!window.ZL.validateCpf(cpf)) {
           errEl.textContent = "CPF inválido.";
           errEl.classList.remove("hidden");
           return;
@@ -81,7 +81,7 @@
           errEl.classList.remove("hidden");
           return;
         }
-        if (!window.FH.validateEmail(email)) {
+        if (!window.ZL.validateEmail(email)) {
           errEl.textContent = "E-mail inválido.";
           errEl.classList.remove("hidden");
           return;
@@ -93,8 +93,8 @@
         }
 
         try {
-          await window.FH.register({ cpf, email, password, displayName, isWoman });
-          window.location.href = window.FH.asset("index.html");
+          await window.ZL.register({ cpf, email, password, displayName, isWoman });
+          window.location.href = window.ZL.asset("index.html");
         } catch (err) {
           errEl.textContent = err.message || "Erro ao cadastrar.";
           errEl.classList.remove("hidden");

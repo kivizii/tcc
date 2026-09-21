@@ -1,22 +1,22 @@
 /**
  * Validação e formatação de CPF brasileiro.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
-window.FH.normalizeCpf = function (value) {
+window.ZL.normalizeCpf = function (value) {
   return String(value || "").replace(/\D/g, "").slice(0, 11);
 };
 
-window.FH.formatCpf = function (value) {
-  const digits = window.FH.normalizeCpf(value);
+window.ZL.formatCpf = function (value) {
+  const digits = window.ZL.normalizeCpf(value);
   if (digits.length <= 3) return digits;
   if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
   if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
   return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9, 11)}`;
 };
 
-window.FH.validateCpf = function (value) {
-  const cpf = window.FH.normalizeCpf(value);
+window.ZL.validateCpf = function (value) {
+  const cpf = window.ZL.normalizeCpf(value);
   if (cpf.length !== 11) return false;
   if (/^(\d)\1{10}$/.test(cpf)) return false;
 
@@ -37,18 +37,18 @@ window.FH.validateCpf = function (value) {
   return check === Number(cpf[10]);
 };
 
-window.FH.maskCpfDisplay = function (value) {
-  const cpf = window.FH.normalizeCpf(value);
+window.ZL.maskCpfDisplay = function (value) {
+  const cpf = window.ZL.normalizeCpf(value);
   if (cpf.length !== 11) return "";
   return `***.***.***-${cpf.slice(9, 11)}`;
 };
 
-window.FH.bindCpfInput = function (input) {
+window.ZL.bindCpfInput = function (input) {
   if (!input) return;
   input.addEventListener("input", () => {
     const pos = input.selectionStart;
     const before = input.value.length;
-    input.value = window.FH.formatCpf(input.value);
+    input.value = window.ZL.formatCpf(input.value);
     const after = input.value.length;
     const next = Math.max(0, pos + (after - before));
     input.setSelectionRange(next, next);

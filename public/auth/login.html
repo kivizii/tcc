@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entrar — FEMHELP</title>
+  <title>Entrar — Zela</title>
   <script src="../js/bootstrap.js" data-depth="1" data-modules="js/cpf.js"></script>
 </head>
 <body>
@@ -38,14 +38,14 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
+    document.addEventListener("zela:ready", () => {
       const form = document.getElementById("login-form");
       const errEl = document.getElementById("login-error");
       const cpfInput = form.cpf;
 
-      window.FH.bindCpfInput(cpfInput);
+      window.ZL.bindCpfInput(cpfInput);
 
-      if (window.FH.demoMode) {
+      if (window.ZL.demoMode) {
         document.getElementById("demo-notice")?.classList.remove("hidden");
       } else {
         document.getElementById("demo-notice")?.classList.add("hidden");
@@ -59,12 +59,12 @@
         const email = form.email.value.trim();
         const password = form.password.value;
 
-        if (!window.FH.validateCpf(cpf)) {
+        if (!window.ZL.validateCpf(cpf)) {
           errEl.textContent = "CPF inválido.";
           errEl.classList.remove("hidden");
           return;
         }
-        if (!window.FH.validateEmail(email)) {
+        if (!window.ZL.validateEmail(email)) {
           errEl.textContent = "E-mail inválido.";
           errEl.classList.remove("hidden");
           return;
@@ -76,7 +76,7 @@
         }
 
         try {
-          await window.FH.login({ cpf, email, password });
+          await window.ZL.login({ cpf, email, password });
           const params = new URLSearchParams(window.location.search);
           const redirect = params.get("redirect");
           if (redirect) {
@@ -85,10 +85,10 @@
             } else if (redirect.startsWith("/")) {
               window.location.href = redirect;
             } else {
-              window.location.href = window.FH.asset(redirect);
+              window.location.href = window.ZL.asset(redirect);
             }
           } else {
-            window.location.href = window.FH.asset("index.html");
+            window.location.href = window.ZL.asset("index.html");
           }
         } catch (err) {
           errEl.textContent = err.message || "Erro ao entrar.";

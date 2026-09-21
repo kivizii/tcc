@@ -3,8 +3,8 @@
  * Adicione no HTML antes do bootstrap (opcional):
  * <script src="js/firebase-config.local.js"></script>
  */
-window.FH = window.FH || {};
-Object.assign(window.FH.firebaseConfig, {
+window.ZL = window.ZL || {};
+Object.assign(window.ZL.firebaseConfig, {
   apiKey: "SUA_API_KEY",
   authDomain: "seu-projeto.firebaseapp.com",
   projectId: "seu-projeto",

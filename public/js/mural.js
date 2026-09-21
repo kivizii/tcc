@@ -1,9 +1,9 @@
 /**
  * Mural de relatos — UI com posts em localStorage (mock).
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
-window.FH.initMuralPage = function () {
+window.ZL.initMuralPage = function () {
   const listEl = document.getElementById("mural-posts");
   const form = document.getElementById("mural-form");
   if (!listEl) return;
@@ -24,11 +24,11 @@ window.FH.initMuralPage = function () {
   ];
 
   function getPosts() {
-    return window.FH.storage.get(STORAGE_KEY, seedPosts);
+    return window.ZL.storage.get(STORAGE_KEY, seedPosts);
   }
 
   function savePosts(posts) {
-    window.FH.storage.set(STORAGE_KEY, posts);
+    window.ZL.storage.set(STORAGE_KEY, posts);
   }
 
   function render() {
@@ -54,10 +54,10 @@ window.FH.initMuralPage = function () {
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const user = window.FH.getCurrentUser();
+      const user = window.ZL.getCurrentUser();
       if (!user) {
         alert("Faça login para publicar no mural.");
-        window.location.href = window.FH.asset("auth/login.html");
+        window.location.href = window.ZL.asset("auth/login.html");
         return;
       }
       const text = form.text.value.trim();
@@ -77,8 +77,8 @@ window.FH.initMuralPage = function () {
   render();
 };
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   if (document.body.dataset.page === "mural") {
-    window.FH.initMuralPage();
+    window.ZL.initMuralPage();
   }
 });

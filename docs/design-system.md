@@ -1,8 +1,8 @@
-# Design System — FEMHELP
+# Design System — Zela
 
-Guia de identidade visual do app FEMHELP. Fonte de verdade no código: [`public/css/tokens.css`](../public/css/tokens.css).
+**Zela por ela** — guia de identidade visual do app Zela. Fonte de verdade no código: [`public/css/tokens.css`](../public/css/tokens.css).
 
-**Linear:** issues com label `layout` no epic [TCC-7](https://linear.app/tcc-femhelp/issue/TCC-7/epic-identidade-ux-e-navegacao).
+**Linear:** issues com label `layout` no epic [TCC-7](https://linear.app/tcc-zela/issue/TCC-7/epic-identidade-ux-e-navegacao).
 
 ---
 
@@ -144,8 +144,8 @@ Fonte carregada em [`public/css/base.css`](../public/css/base.css) via Google Fo
 
 | Arquivo | Descrição |
 |---------|-----------|
-| `public/assets/logo/femhelp-wordmark.svg` | Wordmark tipográfico discreto |
-| `public/assets/logo/femhelp-icon.svg` | Flor minimalista em fundo rosa (favicon/PWA) |
+| `public/assets/logo/zela-wordmark.svg` | Wordmark tipográfico discreto |
+| `public/assets/logo/zela-icon.svg` | Flor minimalista em fundo rosa (favicon/PWA) |
 | `public/assets/favicon.svg` | Favicon do site |
 
 Wordmark no header via [`public/js/nav.js`](../public/js/nav.js). Favicon injetado por [`public/js/bootstrap.js`](../public/js/bootstrap.js).
@@ -239,22 +239,22 @@ Bootstrap: `<script src="js/bootstrap.js" data-depth="N"></script>` onde `N` = n
 ### Conteúdo (vídeos, cursos, empregos)
 
 - Dados em `public/data/content.json` — chaves `videos`, `cursos` e `empregos`.
-- Telas em `public/content/` renderizam cards via `js/content.js` (`FH.initContentPage`).
+- Telas em `public/content/` renderizam cards via `js/content.js` (`ZL.initContentPage`).
 - **Vídeos do dia a dia:** ~17 itens em `videos[]`, categorias `Manutenção`, `Reparos`, `Segurança` e `Elétrica básica`. Cada item tem `title`, `description`, `category`, `tag`, `source` (opcional) e `link` (URL do YouTube). Cards exibem thumbnail 16:9 (`.card__thumb`) derivada automaticamente do ID do vídeo (`img.youtube.com/vi/{id}/mqdefault.jpg`) e botão **Assistir no YouTube**.
-- **Cursos gratuitos:** 6 blocos (`.course-block`) alinhados às áreas do plano do TCC, cada um com 4–6 links de vídeo no YouTube. Cada item em `content.json` pode ter `links[]` com `label`, `url` e `type` (`video` ou `course`). O bloco exibe thumbnail do vídeo principal (`.course-block__thumb`) e botões com mini-thumbnail nos links de vídeo (`.course-link--video`) ou secundário **Ver formação completa** (`.course-link--secondary`). Campo `source` exibe a instituição. `FH.renderCourseBlocks` é usado só na página de cursos; vídeos e empregos usam `renderCardGrid`.
+- **Cursos gratuitos:** 6 blocos (`.course-block`) alinhados às áreas do plano do TCC, cada um com 4–6 links de vídeo no YouTube. Cada item em `content.json` pode ter `links[]` com `label`, `url` e `type` (`video` ou `course`). O bloco exibe thumbnail do vídeo principal (`.course-block__thumb`) e botões com mini-thumbnail nos links de vídeo (`.course-link--video`) ou secundário **Ver formação completa** (`.course-link--secondary`). Campo `source` exibe a instituição. `ZL.renderCourseBlocks` é usado só na página de cursos; vídeos e empregos usam `renderCardGrid`.
 
 ### Chat feminino
 
 - Dados em `public/data/communities.json` — salas com `seedMessages[]` (conversas demonstrativas entre mulheres fictícias).
-- Lógica em `public/js/chat.js` (`FH.initChatPage`) e painel de salas em `public/js/communities.js`.
-- **Login obrigatório** para acessar `community/chat.html` (`FH.requireAuth`).
+- Lógica em `public/js/chat.js` (`ZL.initChatPage`) e painel de salas em `public/js/communities.js`.
+- **Login obrigatório** para acessar `community/chat.html` (`ZL.requireAuth`).
 - **Demo fixo:** `seedMessages` vêm sempre do JSON e não são sobrescritas no `localStorage`.
 - **Fallback embutido:** se o JSON falhar ao carregar, `chat.js` usa conversas de reserva (sala `amizade`) para não exibir chat vazio.
 - **Mensagens da usuária:** persistidas em `chat_user_{roomId}`; ao renderizar, demo + usuária são mescladas. Chaves legadas `chat_messages_*` são removidas na migração.
 - Cada mensagem pode ter `author`, `text`, `time` (opcional) e `own` (`true` só para a usuária logada).
 - UI: `.message-list`, `.message-bubble--own` (lilás) / `.message-bubble--other` (bege), aviso `.chat-demo-notice`.
-- **Reset de dados de teste (modo demo):** em Configurações, botão **Apagar dados de teste** chama `FH.resetDemoData()` e apaga todas as chaves `femhelp_demo_*` (contas, chat, contatos, mural, SOS).
-- **Console (alternativa):** `Object.keys(localStorage).filter(k => k.startsWith("femhelp_demo_")).forEach(k => localStorage.removeItem(k))`
+- **Reset de dados de teste (modo demo):** em Configurações, botão **Apagar dados de teste** chama `ZL.resetDemoData()` e apaga todas as chaves `zela_demo_*` (contas, chat, contatos, mural, SOS).
+- **Console (alternativa):** `Object.keys(localStorage).filter(k => k.startsWith("zela_demo_")).forEach(k => localStorage.removeItem(k))`
 - **Fluxo de demonstração (TCC):** Configurações → Apagar dados de teste → cadastrar conta nova → abrir sala (ex.: `?room=amizade`) → ver 10 mensagens fictícias → enviar mensagem → recarregar e confirmar que demo + mensagem própria persistem.
 
 ### Autenticação
@@ -262,13 +262,13 @@ Bootstrap: `<script src="js/bootstrap.js" data-depth="N"></script>` onde `N` = n
 - **Login:** CPF + e-mail + senha (os três obrigatórios). CPF validado localmente em `js/cpf.js` (dígitos verificadores e rejeição de sequências inválidas).
 - **Cadastro:** CPF + declaração explícita de identidade feminina (checkbox obrigatório) + termos LGPD. O CPF brasileiro não codifica gênero; a restrição de acesso é por regra de negócio no app.
 - **Firebase:** credencial continua sendo e-mail/senha; CPF e `isWoman` ficam no perfil (`users/{uid}` no Firestore ou `localStorage` no modo demo).
-- **Perfil:** em Configurações, CPF exibido mascarado (`***.***.***-XX`) via `FH.maskCpfDisplay`.
+- **Perfil:** em Configurações, CPF exibido mascarado (`***.***.***-XX`) via `ZL.maskCpfDisplay`.
 
 ---
 
 ## Acessibilidade (WCAG AA)
 
-Auditoria da paleta FEMHELP (texto normal ≥ 4.5:1, texto grande ≥ 3:1).
+Auditoria da paleta Zela (texto normal ≥ 4.5:1, texto grande ≥ 3:1).
 
 | Par de cores | Ratio | Status | Notas |
 |--------------|-------|--------|-------|
@@ -303,7 +303,7 @@ Auditoria da paleta FEMHELP (texto normal ≥ 4.5:1, texto grande ≥ 3:1).
 | Ícones SVG | [`public/assets/icons/`](../public/assets/icons/) |
 | Logo | [`public/assets/logo/`](../public/assets/logo/) |
 
-**Issue:** [TCC-67](https://linear.app/tcc-femhelp/issue/TCC-67/criar-arquivo-figma-com-design-tokens-e-componentes-base)
+**Issue:** [TCC-67](https://linear.app/tcc-zela/issue/TCC-67/criar-arquivo-figma-com-design-tokens-e-componentes-base)
 
 ---
 

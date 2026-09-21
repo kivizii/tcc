@@ -1,12 +1,12 @@
 /**
  * Carrega conteúdo estático de data/content.json.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const CONTENT_JSON_VERSION = 4;
 
-window.FH.loadContent = async function () {
-  const url = `${window.FH.asset("data/content.json")}?v=${CONTENT_JSON_VERSION}`;
+window.ZL.loadContent = async function () {
+  const url = `${window.ZL.asset("data/content.json")}?v=${CONTENT_JSON_VERSION}`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("Não foi possível carregar o conteúdo.");
   return res.json();
@@ -49,7 +49,7 @@ function renderThumbnailHtml(url, title, className = "card__thumb") {
     </a>`;
 }
 
-window.FH.renderCardGrid = function (containerId, items, options = {}) {
+window.ZL.renderCardGrid = function (containerId, items, options = {}) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -79,7 +79,7 @@ window.FH.renderCardGrid = function (containerId, items, options = {}) {
     .join("")}</div>`;
 };
 
-window.FH.renderCourseBlocks = function (containerId, items, options = {}) {
+window.ZL.renderCourseBlocks = function (containerId, items, options = {}) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
@@ -128,7 +128,7 @@ window.FH.renderCourseBlocks = function (containerId, items, options = {}) {
     .join("")}</div>`;
 };
 
-window.FH.initFilterTags = function (tagContainerId, items, onFilter) {
+window.ZL.initFilterTags = function (tagContainerId, items, onFilter) {
   const container = document.getElementById(tagContainerId);
   if (!container) return;
 
@@ -157,26 +157,26 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-window.FH.initContentPage = async function (type, containerId, tagContainerId) {
+window.ZL.initContentPage = async function (type, containerId, tagContainerId) {
   const container = document.getElementById(containerId);
   if (container) {
     container.innerHTML = '<p class="text-muted">Carregando...</p>';
   }
 
   try {
-    const data = await window.FH.loadContent();
+    const data = await window.ZL.loadContent();
     const items = data[type] || [];
     const render =
       type === "cursos"
-        ? (filter) => window.FH.renderCourseBlocks(containerId, items, { filterKey: "category", filterValue: filter })
-        : (filter) => window.FH.renderCardGrid(containerId, items, { filterKey: "category", filterValue: filter });
+        ? (filter) => window.ZL.renderCourseBlocks(containerId, items, { filterKey: "category", filterValue: filter })
+        : (filter) => window.ZL.renderCardGrid(containerId, items, { filterKey: "category", filterValue: filter });
 
     if (tagContainerId) {
-      window.FH.initFilterTags(tagContainerId, items, render);
+      window.ZL.initFilterTags(tagContainerId, items, render);
     }
     render("all");
   } catch (err) {
-    console.error("FEMHELP: erro ao carregar conteúdo", err);
+    console.error("Zela: erro ao carregar conteúdo", err);
     if (container) {
       container.innerHTML =
         '<p class="form-error">Não foi possível carregar os cursos. Verifique sua conexão e recarregue a página.</p>';
@@ -184,9 +184,9 @@ window.FH.initContentPage = async function (type, containerId, tagContainerId) {
   }
 };
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   const page = document.body.dataset.page;
-  if (page === "videos") window.FH.initContentPage("videos", "content-grid", "filter-tags");
-  if (page === "cursos") window.FH.initContentPage("cursos", "content-grid", "filter-tags");
-  if (page === "empregos") window.FH.initContentPage("empregos", "content-grid", "filter-tags");
+  if (page === "videos") window.ZL.initContentPage("videos", "content-grid", "filter-tags");
+  if (page === "cursos") window.ZL.initContentPage("cursos", "content-grid", "filter-tags");
+  if (page === "empregos") window.ZL.initContentPage("empregos", "content-grid", "filter-tags");
 });

@@ -1,4 +1,4 @@
-# Schema Firebase — FEMHELP
+# Schema Firebase — Zela
 
 ## Coleções
 
@@ -46,4 +46,4 @@
 
 ## Modo demonstração
 
-Sem credenciais Firebase configuradas, o app usa `localStorage` com prefixo `femhelp_demo_`.
+Sem credenciais Firebase configuradas, o app usa `localStorage` com prefixo `zela_demo_`.

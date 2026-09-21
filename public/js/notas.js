@@ -1,7 +1,7 @@
 /**
  * Notas da comunidade — feed público com demonstração, notas privadas e comentários.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const NOTE_MAX_LENGTH = 280;
 const COMMENT_MAX_LENGTH = 200;
@@ -25,7 +25,7 @@ const SEED_PUBLIC_NOTES = [
   },
   {
     id: "demo_note_3",
-    text: "Passei no curso de informática da FEMHELP! Não foi fácil conciliar com os filhos, mas eu consegui.",
+    text: "Passei no curso de informática da Zela! Não foi fácil conciliar com os filhos, mas eu consegui.",
     author: "Júlia",
     demo: true,
     createdAt: "2026-03-09T12:05:00.000Z",
@@ -123,20 +123,20 @@ function escapeHtml(str) {
 }
 
 function getPublicNotes() {
-  return window.FH.storage.get(PUBLIC_NOTES_KEY, []);
+  return window.ZL.storage.get(PUBLIC_NOTES_KEY, []);
 }
 
 function savePublicNotes(notes) {
-  window.FH.storage.set(PUBLIC_NOTES_KEY, notes);
+  window.ZL.storage.set(PUBLIC_NOTES_KEY, notes);
 }
 
 function getPrivateNotes(uid) {
   if (!uid) return [];
-  return window.FH.storage.get(privateNotesStorageKey(uid), []);
+  return window.ZL.storage.get(privateNotesStorageKey(uid), []);
 }
 
 function savePrivateNotes(uid, notes) {
-  window.FH.storage.set(privateNotesStorageKey(uid), notes);
+  window.ZL.storage.set(privateNotesStorageKey(uid), notes);
 }
 
 function getSeedComments(noteId) {
@@ -144,7 +144,7 @@ function getSeedComments(noteId) {
 }
 
 function getStoredComments(noteId) {
-  return window.FH.storage.get(commentsStorageKey(noteId), []);
+  return window.ZL.storage.get(commentsStorageKey(noteId), []);
 }
 
 function getComments(noteId) {
@@ -155,7 +155,7 @@ function getComments(noteId) {
 }
 
 function saveStoredComments(noteId, comments) {
-  window.FH.storage.set(commentsStorageKey(noteId), comments);
+  window.ZL.storage.set(commentsStorageKey(noteId), comments);
 }
 
 function getCommunityNotes() {
@@ -198,8 +198,8 @@ function isOwnNote(note, user) {
 
 function renderAuthorAvatar(note) {
   const profile = { displayName: note.author || "Usuária", uid: note.authorUid || null };
-  if (typeof window.FH.getAvatarMarkup === "function") {
-    return window.FH.getAvatarMarkup(profile, "sm");
+  if (typeof window.ZL.getAvatarMarkup === "function") {
+    return window.ZL.getAvatarMarkup(profile, "sm");
   }
   return `<span class="user-avatar user-avatar--sm user-avatar--initials">${escapeHtml((note.author || "?").slice(0, 2).toUpperCase())}</span>`;
 }
@@ -207,8 +207,8 @@ function renderAuthorAvatar(note) {
 function renderComment(comment) {
   const profile = { displayName: comment.author || "Usuária", uid: comment.authorUid || null };
   const avatar =
-    typeof window.FH.getAvatarMarkup === "function"
-      ? window.FH.getAvatarMarkup(profile, "sm")
+    typeof window.ZL.getAvatarMarkup === "function"
+      ? window.ZL.getAvatarMarkup(profile, "sm")
       : "";
 
   return `
@@ -227,7 +227,7 @@ function renderComment(comment) {
 function renderCommentsSection(note, currentUser) {
   const comments = getComments(note.id);
   const commentsHtml = comments.map(renderComment).join("");
-  const loginUrl = `${window.FH.asset("auth/login.html")}?redirect=${encodeURIComponent(window.FH.asset("community/notas.html"))}`;
+  const loginUrl = `${window.ZL.asset("auth/login.html")}?redirect=${encodeURIComponent(window.ZL.asset("community/notas.html"))}`;
 
   const formHtml = currentUser
     ? `
@@ -294,12 +294,12 @@ function renderEmptyState(message) {
 }
 
 function requireLoginForAction() {
-  const loginUrl = `${window.FH.asset("auth/login.html")}?redirect=${encodeURIComponent(window.FH.asset("community/notas.html"))}`;
+  const loginUrl = `${window.ZL.asset("auth/login.html")}?redirect=${encodeURIComponent(window.ZL.asset("community/notas.html"))}`;
   window.location.href = loginUrl;
   return null;
 }
 
-window.FH.initNotasPage = function () {
+window.ZL.initNotasPage = function () {
   const form = document.getElementById("daily-notes-form");
   const input = document.getElementById("daily-note-input");
   const counterEl = document.getElementById("daily-note-counter");
@@ -310,12 +310,12 @@ window.FH.initNotasPage = function () {
   const composerLockedEl = document.getElementById("composer-login-hint");
   if (!form || !input || !communityListEl) return;
 
-  let currentUser = window.FH.getCurrentUser();
+  let currentUser = window.ZL.getCurrentUser();
   let editingId = null;
   let editingScope = null;
 
   function updateComposerState() {
-    currentUser = window.FH.getCurrentUser();
+    currentUser = window.ZL.getCurrentUser();
     const loggedIn = Boolean(currentUser);
 
     form.classList.toggle("daily-notes-composer--locked", !loggedIn);
@@ -328,7 +328,7 @@ window.FH.initNotasPage = function () {
       composerLockedEl.hidden = loggedIn;
       const loginLink = composerLockedEl.querySelector("a");
       if (loginLink) {
-        loginLink.href = `${window.FH.asset("auth/login.html")}?redirect=${encodeURIComponent(window.FH.asset("community/notas.html"))}`;
+        loginLink.href = `${window.ZL.asset("auth/login.html")}?redirect=${encodeURIComponent(window.ZL.asset("community/notas.html"))}`;
       }
     }
   }
@@ -376,7 +376,7 @@ window.FH.initNotasPage = function () {
   }
 
   function render() {
-    currentUser = window.FH.getCurrentUser();
+    currentUser = window.ZL.getCurrentUser();
     updateComposerState();
     renderCommunity();
     renderPrivate();
@@ -570,14 +570,14 @@ window.FH.initNotasPage = function () {
     render();
   });
 
-  window.FH.onAuthChange?.(() => render());
-  document.addEventListener("femhelp:profile-updated", () => render());
+  window.ZL.onAuthChange?.(() => render());
+  document.addEventListener("zela:profile-updated", () => render());
 
   render();
 };
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   if (document.body.dataset.page === "notas") {
-    window.FH.initNotasPage();
+    window.ZL.initNotasPage();
   }
 });

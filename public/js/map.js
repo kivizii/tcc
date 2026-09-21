@@ -1,7 +1,7 @@
 /**
  * Mapa de apoio — Leaflet + OpenStreetMap (São Paulo).
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const SP_CENTER = [-23.5505, -46.6333];
 const SP_ZOOM = 12;
@@ -214,7 +214,7 @@ function createUserIcon(L) {
   });
 }
 
-window.FH.initMapPage = async function () {
+window.ZL.initMapPage = async function () {
   const mapEl = document.getElementById("map");
   const listEl = document.getElementById("poi-list");
   const filterContainer = document.getElementById("map-filters");
@@ -230,8 +230,8 @@ window.FH.initMapPage = async function () {
   try {
     let pois = DEFAULT_POIS;
     try {
-      if (typeof window.FH.loadContent === "function") {
-        const data = await window.FH.loadContent();
+      if (typeof window.ZL.loadContent === "function") {
+        const data = await window.ZL.loadContent();
         if (data.pois?.length) pois = data.pois;
       }
     } catch {
@@ -365,17 +365,17 @@ window.FH.initMapPage = async function () {
     });
   } catch (err) {
     mapInitStarted = false;
-    console.error("FEMHELP map error:", err);
+    console.error("Zela map error:", err);
     setMapStatus(err.message || "Erro ao carregar o mapa. Use um servidor local e verifique sua conexão.", true);
   }
 };
 
 function bootMapPage() {
   if (document.body.dataset.page !== "map") return;
-  window.FH.initMapPage();
+  window.ZL.initMapPage();
 }
 
-document.addEventListener("femhelp:ready", bootMapPage);
+document.addEventListener("zela:ready", bootMapPage);
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {

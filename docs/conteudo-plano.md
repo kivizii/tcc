@@ -1,16 +1,17 @@
-# FEMHELP
+# Zela
+## Zela por ela
 ## Plano e documentação do projeto
 ### Escola Raul Brasil — TCC em Análise e Desenvolvimento de Sistemas
 Heloise Vitoria · Lia Isiye · Geovana Pinto Ferreira
 
-Este documento reorganiza o plano original do projeto FEMHELP: remove trechos duplicados, corrige a redação e apresenta uma estrutura única para entrega acadêmica e para o repositório no GitHub.
+Este documento reorganiza o plano original do projeto Zela: remove trechos duplicados, corrige a redação e apresenta uma estrutura única para entrega acadêmica e para o repositório no GitHub.
 
 ---
 
 # Sumário
 
 1. Identificação do trabalho
-2. Apresentação da FEMHELP
+2. Apresentação da Zela
 3. Serviços e funcionalidades
 4. Segurança da plataforma
 5. Público-alvo, objetivos e respaldo legal
@@ -30,14 +31,14 @@ Este documento reorganiza o plano original do projeto FEMHELP: remove trechos du
 **Instituição:** Escola Raul Brasil  
 **Curso:** Análise e Desenvolvimento de Sistemas  
 **Trabalho:** Projeto de TCC  
-**Nome do produto:** FEMHELP  
+**Nome do produto:** Zela  
 **Integrantes:** Heloise Vitoria, Lia Isiye e Geovana Pinto Ferreira  
 
-A FEMHELP é uma proposta de plataforma digital e de rede de apoio voltada à segurança, ao acolhimento e à independência de mulheres. O projeto combina interface discreta, recursos de emergência, capacitação, apoio emocional e articulação com serviços presenciais.
+A Zela é uma proposta de plataforma digital e de rede de apoio voltada à segurança, ao acolhimento e à independência de mulheres. O projeto combina interface discreta, recursos de emergência, capacitação, apoio emocional e articulação com serviços presenciais.
 
 ---
 
-# 2. Apresentação da FEMHELP
+# 2. Apresentação da Zela
 
 ## 2.1 Missão
 
@@ -55,7 +56,7 @@ A atuação se organiza em torno de:
 
 ## 2.2 Visão
 
-A visão da FEMHELP é tornar-se uma das maiores e mais importantes plataformas de apoio feminino do Brasil e, futuramente, do mundo. A empresa deseja ser reconhecida pela inovação tecnológica, pelo acolhimento social e pelo impacto positivo na vida das mulheres.
+A visão da Zela é tornar-se uma das maiores e mais importantes plataformas de apoio feminino do Brasil e, futuramente, do mundo. A empresa deseja ser reconhecida pela inovação tecnológica, pelo acolhimento social e pelo impacto positivo na vida das mulheres.
 
 Busca-se uma sociedade mais segura e igualitária, na qual mulheres tenham acesso a segurança, respeito, oportunidades, apoio psicológico, independência financeira, desenvolvimento profissional e qualidade de vida.
 
@@ -83,7 +84,7 @@ A empresa oferece auxílio a mães que criam os filhos sozinhas, incluindo orien
 
 ## 3.4 Creche para crianças
 
-A FEMHELP prevê creche parceira para mães que precisam trabalhar, estudar ou participar dos cursos. O serviço contribui para inclusão social, oportunidade profissional, segurança das crianças e qualidade de vida das mães.
+A Zela prevê creche parceira para mães que precisam trabalhar, estudar ou participar dos cursos. O serviço contribui para inclusão social, oportunidade profissional, segurança das crianças e qualidade de vida das mães.
 
 ## 3.5 Oportunidades de emprego
 
@@ -102,7 +103,7 @@ O recurso busca aumentar a proteção em situações de risco, com aparência co
 
 ## 3.7 Apoio psicológico
 
-A FEMHELP disponibiliza psicólogos para dificuldades socioemocionais. Os atendimentos abrangem ansiedade, medo, autoestima, violência psicológica, problemas emocionais e apoio emocional de modo geral.
+A Zela disponibiliza psicólogos para dificuldades socioemocionais. Os atendimentos abrangem ansiedade, medo, autoestima, violência psicológica, problemas emocionais e apoio emocional de modo geral.
 
 ## 3.8 Chat feminino
 
@@ -110,7 +111,7 @@ Há um chat exclusivo para mulheres, voltado a acolhimento, apoio emocional e tr
 
 O chat existe porque muitas mulheres se sentem sozinhas, inseguras ou sem rede para enfrentar dificuldades pessoais. Situações frequentes incluem violência doméstica, assédio, abandono, depressão, ansiedade, medo, dificuldades financeiras, preconceito, solidão e relacionamentos abusivos.
 
-O ambiente da FEMHELP busca mostrar que nenhuma mulher está sozinha. Homens familiares, amigos e apoiadores também podem deixar mensagens de conscientização sobre o respeito às mulheres e sobre o impacto da violência na sociedade. O espaço é monitorado e moderado para garantir respeito, segurança e acolhimento.
+O ambiente da Zela busca mostrar que nenhuma mulher está sozinha. Homens familiares, amigos e apoiadores também podem deixar mensagens de conscientização sobre o respeito às mulheres e sobre o impacto da violência na sociedade. O espaço é monitorado e moderado para garantir respeito, segurança e acolhimento.
 
 ## 3.9 Mural de relatos
 
@@ -157,7 +158,7 @@ Esses mecanismos visam um ambiente em que mulheres possam conversar, pedir ajuda
 
 ## 5.1 Público-alvo
 
-A FEMHELP atende mulheres em situação de vulnerabilidade, mães solo, mulheres vítimas de violência, mulheres em busca de emprego, mulheres que procuram apoio psicológico e mulheres interessadas em capacitação profissional.
+A Zela atende mulheres em situação de vulnerabilidade, mães solo, mulheres vítimas de violência, mulheres em busca de emprego, mulheres que procuram apoio psicológico e mulheres interessadas em capacitação profissional.
 
 ## 5.2 Objetivos
 
@@ -180,7 +181,7 @@ Objetivos específicos:
 - Criar ambientes seguros
 - Utilizar tecnologia para proteção feminina
 
-A FEMHELP pretende ser mais do que um site: uma rede de acolhimento, proteção e transformação social. A plataforma existe para afirmar que mulheres merecem viver com respeito, dignidade, liberdade e segurança.
+A Zela pretende ser mais do que um site: uma rede de acolhimento, proteção e transformação social. A plataforma existe para afirmar que mulheres merecem viver com respeito, dignidade, liberdade e segurança.
 
 ## 5.3 Leis que apoiam os objetivos
 

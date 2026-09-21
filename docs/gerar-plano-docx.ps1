@@ -1,10 +1,10 @@
-# Gera docs/Plano-Projeto-FEMHELP.docx a partir de docs/conteudo-plano.md
+# Gera docs/Plano-Projeto-Zela.docx a partir de docs/conteudo-plano.md
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $mdPath = Join-Path $root "conteudo-plano.md"
-$outPath = Join-Path $root "Plano-Projeto-FEMHELP.docx"
-$staging = Join-Path $env:TEMP ("femhelp-docx-" + [guid]::NewGuid().ToString("N"))
+$outPath = Join-Path $root "Plano-Projeto-Zela.docx"
+$staging = Join-Path $env:TEMP ("zela-docx-" + [guid]::NewGuid().ToString("N"))
 
 function Escape-Xml([string]$s) {
     if ($null -eq $s) { return "" }
@@ -202,10 +202,10 @@ $now = [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
 $core = @"
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <dc:title>FEMHELP — Plano e documentação do projeto</dc:title>
+  <dc:title>Zela — Plano e documentação do projeto</dc:title>
   <dc:subject>TCC Análise e Desenvolvimento de Sistemas</dc:subject>
   <dc:creator>Heloise Vitoria; Lia Isiye; Geovana Pinto Ferreira</dc:creator>
-  <cp:lastModifiedBy>FEMHELP</cp:lastModifiedBy>
+  <cp:lastModifiedBy>Zela</cp:lastModifiedBy>
   <dcterms:created xsi:type="dcterms:W3CDTF">$now</dcterms:created>
   <dcterms:modified xsi:type="dcterms:W3CDTF">$now</dcterms:modified>
 </cp:coreProperties>
@@ -214,7 +214,7 @@ $core = @"
 $app = @"
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-  <Application>FEMHELP TCC</Application>
+  <Application>Zela TCC</Application>
 </Properties>
 "@
 

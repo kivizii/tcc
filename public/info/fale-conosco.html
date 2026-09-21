@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fale conosco — FEMHELP</title>
+  <title>Fale conosco — Zela</title>
   <script src="../js/bootstrap.js" data-depth="1"></script>
 </head>
 <body data-page="contact-us">
@@ -12,13 +12,13 @@
     <p class="page-subtitle">Dúvidas, sugestões ou feedback — estamos aqui para ouvir você</p>
 
     <div class="alert alert--info">
-      Para <strong>emergências</strong>, use o botão SOS ou ligue <strong>190</strong> / <strong>180</strong>. Esta página é para contato geral com a equipe FEMHELP.
+      Para <strong>emergências</strong>, use o botão SOS ou ligue <strong>190</strong> / <strong>180</strong>. Esta página é para contato geral com a equipe Zela.
     </div>
 
     <section class="contact-channels" aria-label="Canais de contato">
-      <a href="mailto:contato@femhelp.org.br" class="contact-channel card">
+      <a href="mailto:contato@zela.org.br" class="contact-channel card">
         <span class="contact-channel__label">E-mail</span>
-        <span class="contact-channel__value">contato@femhelp.org.br</span>
+        <span class="contact-channel__value">contato@zela.org.br</span>
       </a>
       <a href="tel:1130003333" class="contact-channel card">
         <span class="contact-channel__label">Telefone</span>
@@ -60,7 +60,7 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
+    document.addEventListener("zela:ready", () => {
       const form = document.getElementById("contact-us-form");
       const errEl = document.getElementById("contact-us-error");
       const okEl = document.getElementById("contact-us-success");
@@ -80,7 +80,7 @@
           errEl.classList.remove("hidden");
           return;
         }
-        if (!window.FH.validateEmail?.(email)) {
+        if (!window.ZL.validateEmail?.(email)) {
           errEl.textContent = "E-mail inválido.";
           errEl.classList.remove("hidden");
           return;
@@ -105,9 +105,9 @@
           createdAt: new Date().toISOString(),
         };
 
-        const messages = window.FH.storage.get("contactMessages", []);
+        const messages = window.ZL.storage.get("contactMessages", []);
         messages.push(entry);
-        window.FH.storage.set("contactMessages", messages);
+        window.ZL.storage.set("contactMessages", messages);
 
         okEl.textContent = "Mensagem enviada! Entraremos em contato em até 48 horas úteis.";
         okEl.classList.remove("hidden");

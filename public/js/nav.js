@@ -27,9 +27,9 @@
 
     NAV_ITEMS.forEach((item) => {
       const a = document.createElement("a");
-      a.href = window.FH.asset(item.href);
+      a.href = window.ZL.asset(item.href);
       a.className = "bottom-nav__item" + (isActive(item) ? " bottom-nav__item--active" : "");
-      a.innerHTML = `<span class="bottom-nav__icon">${window.FH.icon(item.icon, "icon icon--nav")}</span><span>${item.label}</span>`;
+      a.innerHTML = `<span class="bottom-nav__icon">${window.ZL.icon(item.icon, "icon icon--nav")}</span><span>${item.label}</span>`;
       nav.appendChild(a);
     });
 
@@ -45,8 +45,11 @@
     header.innerHTML = `
       <div class="app-header__start">
         <div id="header-avatar-slot"></div>
-        <a href="${window.FH.asset("index.html")}" class="app-header__brand">
-          <img src="${window.FH.asset("assets/logo/femhelp-wordmark.svg")}" alt="FEMHELP" class="app-header__logo" width="120" height="28">
+        <a href="${window.ZL.asset("index.html")}" class="app-header__brand">
+          <span class="app-header__brand-text">
+            <img src="${window.ZL.asset("assets/logo/zela-wordmark.svg")}" alt="Zela" class="app-header__logo" width="72" height="28">
+            <span class="app-header__tagline">Zela por ela</span>
+          </span>
         </a>
       </div>
       <div id="header-auth-slot"></div>
@@ -55,12 +58,12 @@
     document.body.classList.add("has-quick-exit");
   }
 
-  window.FH.renderNav = function () {
+  window.ZL.renderNav = function () {
     renderHeader();
     renderBottomNav();
   };
 
   document.addEventListener("DOMContentLoaded", () => {
-    window.FH.renderNav();
+    window.ZL.renderNav();
   });
 })();

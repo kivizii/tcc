@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configurações — FEMHELP</title>
+  <title>Configurações — Zela</title>
   <script src="js/bootstrap.js" data-depth="0" data-modules="js/cpf.js"></script>
 </head>
 <body data-page="settings">
@@ -134,7 +134,7 @@
         <li class="settings-item">
           <a href="info/sobre.html" class="settings-item__link">
             <span class="settings-item__icon" data-icon="books" data-icon-class="icon icon--shortcut" aria-hidden="true"></span>
-            <span class="settings-item__label">Sobre a FEMHELP</span>
+            <span class="settings-item__label">Sobre a Zela</span>
           </a>
         </li>
         <li class="settings-item">
@@ -172,8 +172,8 @@
   </main>
 
   <script>
-    document.addEventListener("femhelp:ready", () => {
-      const user = window.FH.getCurrentUser();
+    document.addEventListener("zela:ready", () => {
+      const user = window.ZL.getCurrentUser();
       const profileSection = document.getElementById("settings-profile");
       const loginItem = document.getElementById("settings-login-item");
       const nameEl = document.getElementById("settings-user-name");
@@ -189,12 +189,12 @@
       const changePhotoBtn = document.getElementById("settings-change-photo");
 
       function renderSettingsAvatar() {
-        const currentUser = window.FH.getCurrentUser();
+        const currentUser = window.ZL.getCurrentUser();
         if (!avatarWrap || !currentUser) return;
-        avatarWrap.innerHTML = window.FH.getAvatarMarkup(currentUser, "lg");
+        avatarWrap.innerHTML = window.ZL.getAvatarMarkup(currentUser, "lg");
       }
 
-      if (window.FH.demoMode) {
+      if (window.ZL.demoMode) {
         if (resetDemoBtn) resetDemoBtn.classList.remove("hidden");
         if (demoMigrateSection) demoMigrateSection.classList.remove("hidden");
       }
@@ -202,7 +202,7 @@
       if (exportDemoBtn) {
         exportDemoBtn.addEventListener("click", async () => {
           try {
-            const { count, method } = await window.FH.copyDemoExport();
+            const { count, method } = await window.ZL.copyDemoExport();
             const msg =
               method === "clipboard"
                 ? `Copiado! ${count} itens na área de transferência. Cole em Importar no site publicado.`
@@ -221,7 +221,7 @@
           if (!file) return;
           try {
             const json = await file.text();
-            const count = window.FH.importDemoData(json);
+            const count = window.ZL.importDemoData(json);
             alert(`Importado: ${count} itens. A página vai recarregar.`);
             location.reload();
           } catch (err) {
@@ -236,7 +236,7 @@
         if (nameEl) nameEl.textContent = user.displayName || "Bem-vinda";
         if (emailEl) emailEl.textContent = user.email || "";
         if (cpfEl && user.cpf) {
-          cpfEl.textContent = `CPF: ${window.FH.maskCpfDisplay(user.cpf)}`;
+          cpfEl.textContent = `CPF: ${window.ZL.maskCpfDisplay(user.cpf)}`;
           cpfEl.classList.remove("hidden");
         }
         renderSettingsAvatar();
@@ -249,7 +249,7 @@
           avatarInput.value = "";
           if (!file) return;
           try {
-            await window.FH.setUserAvatar(file);
+            await window.ZL.setUserAvatar(file);
             renderSettingsAvatar();
           } catch (err) {
             alert(err.message || "Não foi possível atualizar a foto.");
@@ -257,12 +257,12 @@
         });
       }
 
-      document.addEventListener("femhelp:profile-updated", renderSettingsAvatar);
+      document.addEventListener("zela:profile-updated", renderSettingsAvatar);
 
       if (logoutBtn) {
         logoutBtn.addEventListener("click", async () => {
-          await window.FH.logout();
-          window.location.href = window.FH.asset("index.html");
+          await window.ZL.logout();
+          window.location.href = window.ZL.asset("index.html");
         });
       }
 
@@ -272,8 +272,8 @@
             "Isso apaga todas as contas, mensagens e dados salvos neste navegador. Continuar?"
           );
           if (!confirmed) return;
-          window.FH.resetDemoData();
-          window.location.href = window.FH.asset("auth/login.html");
+          window.ZL.resetDemoData();
+          window.location.href = window.ZL.asset("auth/login.html");
         });
       }
     });

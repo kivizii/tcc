@@ -1,27 +1,27 @@
 /**
  * Contatos de confiança — CRUD.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
-window.FH.listContacts = async function () {
-  const user = window.FH.getCurrentUser();
+window.ZL.listContacts = async function () {
+  const user = window.ZL.getCurrentUser();
   if (!user) return [];
 
-  if (window.FH.demoMode) {
-    return window.FH.storage.get(`contacts_${user.uid}`, []);
+  if (window.ZL.demoMode) {
+    return window.ZL.storage.get(`contacts_${user.uid}`, []);
   }
 
   const { collection, getDocs, query, orderBy } = await import(
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
   const snap = await getDocs(
-    query(collection(window.FH.db, "users", user.uid, "contacts"), orderBy("name"))
+    query(collection(window.ZL.db, "users", user.uid, "contacts"), orderBy("name"))
   );
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 };
 
-window.FH.addContact = async function (contact) {
-  const user = window.FH.getCurrentUser();
+window.ZL.addContact = async function (contact) {
+  const user = window.ZL.getCurrentUser();
   if (!user) throw new Error("Faça login para cadastrar contatos.");
 
   const data = {
@@ -32,50 +32,50 @@ window.FH.addContact = async function (contact) {
     createdAt: new Date().toISOString(),
   };
 
-  if (window.FH.demoMode) {
-    const contacts = window.FH.storage.get(`contacts_${user.uid}`, []);
+  if (window.ZL.demoMode) {
+    const contacts = window.ZL.storage.get(`contacts_${user.uid}`, []);
     const id = "c_" + Date.now();
     contacts.push({ id, ...data });
-    window.FH.storage.set(`contacts_${user.uid}`, contacts);
+    window.ZL.storage.set(`contacts_${user.uid}`, contacts);
     return { id, ...data };
   }
 
   const { collection, addDoc, serverTimestamp } = await import(
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
-  const ref = await addDoc(collection(window.FH.db, "users", user.uid, "contacts"), {
+  const ref = await addDoc(collection(window.ZL.db, "users", user.uid, "contacts"), {
     ...data,
     createdAt: serverTimestamp(),
   });
   return { id: ref.id, ...data };
 };
 
-window.FH.updateContact = async function (id, contact) {
-  const user = window.FH.getCurrentUser();
+window.ZL.updateContact = async function (id, contact) {
+  const user = window.ZL.getCurrentUser();
   if (!user) throw new Error("Faça login.");
 
-  if (window.FH.demoMode) {
-    const contacts = window.FH.storage.get(`contacts_${user.uid}`, []);
+  if (window.ZL.demoMode) {
+    const contacts = window.ZL.storage.get(`contacts_${user.uid}`, []);
     const idx = contacts.findIndex((c) => c.id === id);
     if (idx === -1) throw new Error("Contato não encontrado.");
     contacts[idx] = { ...contacts[idx], ...contact };
-    window.FH.storage.set(`contacts_${user.uid}`, contacts);
+    window.ZL.storage.set(`contacts_${user.uid}`, contacts);
     return contacts[idx];
   }
 
   const { doc, updateDoc } = await import(
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
-  await updateDoc(doc(window.FH.db, "users", user.uid, "contacts", id), contact);
+  await updateDoc(doc(window.ZL.db, "users", user.uid, "contacts", id), contact);
 };
 
-window.FH.deleteContact = async function (id) {
-  const user = window.FH.getCurrentUser();
+window.ZL.deleteContact = async function (id) {
+  const user = window.ZL.getCurrentUser();
   if (!user) throw new Error("Faça login.");
 
-  if (window.FH.demoMode) {
-    const contacts = window.FH.storage.get(`contacts_${user.uid}`, []);
-    window.FH.storage.set(
+  if (window.ZL.demoMode) {
+    const contacts = window.ZL.storage.get(`contacts_${user.uid}`, []);
+    window.ZL.storage.set(
       `contacts_${user.uid}`,
       contacts.filter((c) => c.id !== id)
     );
@@ -85,15 +85,15 @@ window.FH.deleteContact = async function (id) {
   const { doc, deleteDoc } = await import(
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
-  await deleteDoc(doc(window.FH.db, "users", user.uid, "contacts", id));
+  await deleteDoc(doc(window.ZL.db, "users", user.uid, "contacts", id));
 };
 
-window.FH.getPreferences = async function () {
-  const user = window.FH.getCurrentUser();
+window.ZL.getPreferences = async function () {
+  const user = window.ZL.getCurrentUser();
   if (!user) return {};
 
-  if (window.FH.demoMode) {
-    return window.FH.storage.get(`prefs_${user.uid}`, {
+  if (window.ZL.demoMode) {
+    return window.ZL.storage.get(`prefs_${user.uid}`, {
       quickExitEnabled: true,
       locationShareMinutes: 30,
     });
@@ -102,16 +102,16 @@ window.FH.getPreferences = async function () {
   const { doc, getDoc } = await import(
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
-  const snap = await getDoc(doc(window.FH.db, "users", user.uid, "preferences", "main"));
+  const snap = await getDoc(doc(window.ZL.db, "users", user.uid, "preferences", "main"));
   return snap.exists() ? snap.data() : {};
 };
 
-window.FH.savePreferences = async function (prefs) {
-  const user = window.FH.getCurrentUser();
+window.ZL.savePreferences = async function (prefs) {
+  const user = window.ZL.getCurrentUser();
   if (!user) throw new Error("Faça login.");
 
-  if (window.FH.demoMode) {
-    window.FH.storage.set(`prefs_${user.uid}`, prefs);
+  if (window.ZL.demoMode) {
+    window.ZL.storage.set(`prefs_${user.uid}`, prefs);
     return;
   }
 
@@ -119,7 +119,7 @@ window.FH.savePreferences = async function (prefs) {
     "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"
   );
   await setDoc(
-    doc(window.FH.db, "users", user.uid, "preferences", "main"),
+    doc(window.ZL.db, "users", user.uid, "preferences", "main"),
     { ...prefs, updatedAt: serverTimestamp() },
     { merge: true }
   );
@@ -132,7 +132,7 @@ const CONTACT_TYPE_LABELS = {
   outro: "Outro",
 };
 
-window.FH.initContactsPage = function () {
+window.ZL.initContactsPage = function () {
   const listEl = document.getElementById("contact-list");
   const listHeader = document.getElementById("contacts-list-header");
   const countEl = document.getElementById("contacts-count");
@@ -146,7 +146,7 @@ window.FH.initContactsPage = function () {
 
   if (!listEl || !form) return;
 
-  window.FH.requireAuth(window.location.pathname);
+  window.ZL.requireAuth(window.location.pathname);
 
   function formatType(type) {
     return CONTACT_TYPE_LABELS[type] || CONTACT_TYPE_LABELS.outro;
@@ -163,18 +163,18 @@ window.FH.initContactsPage = function () {
         </p>
         <a href="#contact-form" class="btn btn--primary btn--block contacts-empty-state__cta">Adicionar primeiro contato</a>
       </div>`;
-    if (window.FH.icon && listEl.querySelector("[data-icon]")) {
+    if (window.ZL.icon && listEl.querySelector("[data-icon]")) {
       listEl.querySelectorAll("[data-icon]").forEach((el) => {
         const name = el.dataset.icon;
         const cls = el.dataset.iconClass || "icon";
-        el.innerHTML = window.FH.icon(name, cls);
+        el.innerHTML = window.ZL.icon(name, cls);
       });
     }
     if (formCard) formCard.classList.add("contacts-form-card--highlight");
   }
 
   async function renderList() {
-    const contacts = await window.FH.listContacts();
+    const contacts = await window.ZL.listContacts();
     if (contacts.length === 0) {
       renderEmptyState();
       return;
@@ -205,7 +205,7 @@ window.FH.initContactsPage = function () {
 
     listEl.querySelectorAll("[data-edit]").forEach((btn) => {
       btn.addEventListener("click", async () => {
-        const contacts = await window.FH.listContacts();
+        const contacts = await window.ZL.listContacts();
         const c = contacts.find((x) => x.id === btn.dataset.edit);
         if (!c) return;
         editIdInput.value = c.id;
@@ -224,7 +224,7 @@ window.FH.initContactsPage = function () {
     listEl.querySelectorAll("[data-delete]").forEach((btn) => {
       btn.addEventListener("click", async () => {
         if (!confirm("Excluir este contato?")) return;
-        await window.FH.deleteContact(btn.dataset.delete);
+        await window.ZL.deleteContact(btn.dataset.delete);
         renderList();
       });
     });
@@ -263,7 +263,7 @@ window.FH.initContactsPage = function () {
       showError("Nome é obrigatório.");
       return;
     }
-    if (!window.FH.validatePhone(phone)) {
+    if (!window.ZL.validatePhone(phone)) {
       showError("Telefone inválido. Use DDD + número.");
       return;
     }
@@ -271,9 +271,9 @@ window.FH.initContactsPage = function () {
     try {
       const editId = editIdInput.value;
       if (editId) {
-        await window.FH.updateContact(editId, { name, phone, type, notifyOnSos });
+        await window.ZL.updateContact(editId, { name, phone, type, notifyOnSos });
       } else {
-        await window.FH.addContact({ name, phone, type, notifyOnSos });
+        await window.ZL.addContact({ name, phone, type, notifyOnSos });
       }
       resetForm();
       renderList();
@@ -293,8 +293,8 @@ window.FH.initContactsPage = function () {
   renderList();
 };
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   if (document.body.dataset.page === "contacts") {
-    window.FH.initContactsPage();
+    window.ZL.initContactsPage();
   }
 });

@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Chat feminino — FEMHELP</title>
+  <title>Chat feminino — Zela</title>
 
   <script src="../js/bootstrap.js" data-depth="1" data-modules="js/communities.js,js/chat.js"></script>
 
@@ -183,7 +183,7 @@
 
       function renderSeeds(listEl, seeds) {
         if (!listEl || !seeds || !seeds.length) return;
-        if (listEl.getAttribute("data-fh-has-messages") === "1") return;
+        if (listEl.getAttribute("data-zl-has-messages") === "1") return;
 
         listEl.innerHTML = seeds.map(function (m) {
           var timeHtml = m.time ? '<span class="message-bubble__time">' + esc(m.time) + "</span>" : "";
@@ -197,19 +197,19 @@
           );
         }).join("");
 
-        listEl.setAttribute("data-fh-has-messages", "1");
+        listEl.setAttribute("data-zl-has-messages", "1");
         listEl.scrollTop = listEl.scrollHeight;
       }
 
       function paintFromFallback(roomId) {
-        if (window.FH && typeof window.FH.paintChatSeedsFallback === "function") {
-          return window.FH.paintChatSeedsFallback(roomId);
+        if (window.ZL && typeof window.ZL.paintChatSeedsFallback === "function") {
+          return window.ZL.paintChatSeedsFallback(roomId);
         }
 
         var listEl = document.getElementById("chat-messages");
         if (!listEl) return;
 
-        var curated = window.FH && window.FH.CURATED_COMMUNITIES_FALLBACK;
+        var curated = window.ZL && window.ZL.CURATED_COMMUNITIES_FALLBACK;
         if (Array.isArray(curated)) {
           var found = curated.find(function (c) { return c.id === roomId; });
           if (found && found.seedMessages && found.seedMessages.length) {
@@ -225,7 +225,7 @@
 
       async function paintFromJson(roomId) {
         var listEl = document.getElementById("chat-messages");
-        if (!listEl || listEl.getAttribute("data-fh-has-messages") === "1") return;
+        if (!listEl || listEl.getAttribute("data-zl-has-messages") === "1") return;
 
         try {
           var res = await fetch("../data/communities.json", { cache: "no-store" });
@@ -246,7 +246,7 @@
 
       function getInlineUserMessages(roomId) {
         try {
-          return JSON.parse(sessionStorage.getItem("fh_inline_chat_" + roomId) || "[]");
+          return JSON.parse(sessionStorage.getItem("zl_inline_chat_" + roomId) || "[]");
         } catch (err) {
           return [];
         }
@@ -254,7 +254,7 @@
 
       function saveInlineUserMessages(roomId, msgs) {
         try {
-          sessionStorage.setItem("fh_inline_chat_" + roomId, JSON.stringify(msgs));
+          sessionStorage.setItem("zl_inline_chat_" + roomId, JSON.stringify(msgs));
         } catch (err) {
           /* ignore */
         }
@@ -275,7 +275,7 @@
             esc(text) +
             "</div></div>"
         );
-        listEl.setAttribute("data-fh-has-messages", "1");
+        listEl.setAttribute("data-zl-has-messages", "1");
         listEl.scrollTop = listEl.scrollHeight;
         return true;
       }
@@ -340,10 +340,10 @@
 
         inlineSendBusy = true;
 
-        if (window.FH && typeof window.FH.sendChatMessage === "function" && window.FH.initChatPage) {
-          window.FH.initChatPage()
+        if (window.ZL && typeof window.ZL.sendChatMessage === "function" && window.ZL.initChatPage) {
+          window.ZL.initChatPage()
             .then(function () {
-              if (window.FH.sendChatMessage(text)) {
+              if (window.ZL.sendChatMessage(text)) {
                 input.value = "";
               } else {
                 inlineFallback();
@@ -362,7 +362,7 @@
         inlineSendBusy = false;
       }
 
-      window.fhSendChatMessage = sendChatMessageInline;
+      window.zlSendChatMessage = sendChatMessageInline;
 
       document.addEventListener("click", function (e) {
         if (!e.target || !e.target.closest("#chat-send-btn")) return;
@@ -400,7 +400,7 @@
         bootInlineChat();
       }
 
-      document.addEventListener("femhelp:ready", function () {
+      document.addEventListener("zela:ready", function () {
         var room = new URLSearchParams(window.location.search).get("room");
         if (room) paintFromFallback(room);
       }, { once: true });

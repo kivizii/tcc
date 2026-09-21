@@ -21,6 +21,20 @@
   text-decoration: none;
 }
 
+.app-header__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.1;
+}
+
+.app-header__tagline {
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-texto-suave);
+  letter-spacing: 0.02em;
+}
+
 .app-header__brand:hover {
   text-decoration: none;
 }

@@ -1,4 +1,4 @@
-# Checklist de testes — FEMHELP
+# Checklist de testes — Zela
 
 Executar antes da defesa do TCC. Marcar cada item após validação.
 

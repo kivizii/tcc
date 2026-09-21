@@ -1,18 +1,18 @@
 /**
  * SOS — botão de emergência com confirmação e registro.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
-window.FH.getContactsForSos = async function () {
-  const contacts = await window.FH.listContacts();
+window.ZL.getContactsForSos = async function () {
+  const contacts = await window.ZL.listContacts();
   return contacts.filter((c) => c.notifyOnSos !== false);
 };
 
-window.FH.triggerSos = async function ({ latitude, longitude } = {}) {
-  const user = window.FH.getCurrentUser();
+window.ZL.triggerSos = async function ({ latitude, longitude } = {}) {
+  const user = window.ZL.getCurrentUser();
   if (!user) throw new Error("Faça login para acionar o SOS.");
 
-  const contacts = await window.FH.getContactsForSos();
+  const contacts = await window.ZL.getContactsForSos();
   const event = {
     id: "sos_" + Date.now(),
     triggeredAt: new Date().toISOString(),
@@ -23,10 +23,10 @@ window.FH.triggerSos = async function ({ latitude, longitude } = {}) {
     expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
   };
 
-  if (window.FH.demoMode) {
-    const events = window.FH.storage.get(`sos_${user.uid}`, []);
+  if (window.ZL.demoMode) {
+    const events = window.ZL.storage.get(`sos_${user.uid}`, []);
     events.unshift(event);
-    window.FH.storage.set(`sos_${user.uid}`, events);
+    window.ZL.storage.set(`sos_${user.uid}`, events);
     return { event, contacts };
   }
 
@@ -35,7 +35,7 @@ window.FH.triggerSos = async function ({ latitude, longitude } = {}) {
   );
 
   const ref = await addDoc(
-    collection(window.FH.db, "users", user.uid, "sos_events"),
+    collection(window.ZL.db, "users", user.uid, "sos_events"),
     {
       triggeredAt: serverTimestamp(),
       latitude: event.latitude,
@@ -49,7 +49,7 @@ window.FH.triggerSos = async function ({ latitude, longitude } = {}) {
   return { event, contacts };
 };
 
-window.FH.getCurrentLocation = function () {
+window.ZL.getCurrentLocation = function () {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
       reject(new Error("Geolocalização não suportada neste dispositivo."));
@@ -67,7 +67,7 @@ window.FH.getCurrentLocation = function () {
   });
 };
 
-window.FH.showSosModal = function (onConfirm) {
+window.ZL.showSosModal = function (onConfirm) {
   const overlay = document.createElement("div");
   overlay.className = "modal-overlay";
   overlay.setAttribute("role", "dialog");
@@ -99,7 +99,7 @@ window.FH.showSosModal = function (onConfirm) {
   overlay.querySelector("#sos-confirm").focus();
 };
 
-window.FH.setSosButtonLoading = function (btn, loading) {
+window.ZL.setSosButtonLoading = function (btn, loading) {
   const iconEl = btn.querySelector(".btn-sos__icon");
   const labelEl = btn.querySelector(".btn-sos__label");
   if (!labelEl) return;
@@ -114,14 +114,14 @@ window.FH.setSosButtonLoading = function (btn, loading) {
   }
 };
 
-window.FH.showSosResult = function () {
+window.ZL.showSosResult = function () {
   const actionZone = document.getElementById("sos-action-zone");
   const resultZone = document.getElementById("sos-result-zone");
   if (actionZone) actionZone.classList.add("hidden");
   if (resultZone) resultZone.classList.remove("hidden");
 };
 
-window.FH.initSosPage = function () {
+window.ZL.initSosPage = function () {
   const btn = document.getElementById("btn-sos-trigger");
   const statusEl = document.getElementById("sos-status");
   const locationEl = document.getElementById("sos-location");
@@ -132,7 +132,7 @@ window.FH.initSosPage = function () {
 
   if (!btn) return;
 
-  window.FH.requireAuth(window.location.pathname);
+  window.ZL.requireAuth(window.location.pathname);
 
   let timerInterval = null;
 
@@ -165,12 +165,12 @@ window.FH.initSosPage = function () {
   }
 
   btn.addEventListener("click", () => {
-    window.FH.showSosModal(async () => {
-      window.FH.setSosButtonLoading(btn, true);
+    window.ZL.showSosModal(async () => {
+      window.ZL.setSosButtonLoading(btn, true);
 
       let coords = {};
       try {
-        coords = await window.FH.getCurrentLocation();
+        coords = await window.ZL.getCurrentLocation();
         if (locationEl) {
           locationEl.textContent = `Lat: ${coords.latitude.toFixed(5)}, Lng: ${coords.longitude.toFixed(5)}`;
           locationEl.classList.remove("hidden");
@@ -183,31 +183,31 @@ window.FH.initSosPage = function () {
       }
 
       try {
-        const { event, contacts } = await window.FH.triggerSos(coords);
+        const { event, contacts } = await window.ZL.triggerSos(coords);
 
-        window.FH.showSosResult();
+        window.ZL.showSosResult();
 
         if (statusEl) {
-          statusEl.innerHTML = `<div class="sos-status"><div class="sos-status__icon">${window.FH.icon("check", "icon icon--status")}</div><p><strong>SOS acionado com sucesso.</strong></p><p class="text-muted">Seus contatos foram notificados.</p></div>`;
+          statusEl.innerHTML = `<div class="sos-status"><div class="sos-status__icon">${window.ZL.icon("check", "icon icon--status")}</div><p><strong>SOS acionado com sucesso.</strong></p><p class="text-muted">Seus contatos foram notificados.</p></div>`;
         }
         if (notifiedEl) {
           notifiedEl.innerHTML =
             contacts.length > 0
               ? `<div class="card"><p class="card__title">Contatos notificados</p><ul class="card__text">${contacts.map((c) => `<li>${c.name} — ${c.phone}</li>`).join("")}</ul></div>`
-              : `<p class="alert alert--warning">Nenhum contato cadastrado para notificação. <a href="${window.FH.asset("contacts/index.html")}">Cadastrar contatos</a></p>`;
+              : `<p class="alert alert--warning">Nenhum contato cadastrado para notificação. <a href="${window.ZL.asset("contacts/index.html")}">Cadastrar contatos</a></p>`;
           notifiedEl.classList.remove("hidden");
         }
         startTimer(event.expiresAt);
       } catch (err) {
         alert(err.message || "Erro ao acionar SOS.");
-        window.FH.setSosButtonLoading(btn, false);
+        window.ZL.setSosButtonLoading(btn, false);
       }
     });
   });
 };
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   if (document.body.dataset.page === "sos") {
-    window.FH.initSosPage();
+    window.ZL.initSosPage();
   }
 });

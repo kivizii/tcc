@@ -47,7 +47,7 @@ Padroniza branch, commit e PR para a equipe do TCC.
 
 ## Título de PR
 
-- `docs: publicar plano FEMHELP no repositorio`
+- `docs: publicar plano Zela no repositorio`
 - `feat(sos): botao de emergencia com confirmacao`
 - `fix(chat): corrigir moderacao de mensagens`
 
@@ -60,5 +60,5 @@ Padroniza branch, commit e PR para a equipe do TCC.
 
 ## Como validar
 - [ ] Abrir README no GitHub e seguir os links
-- [ ] Abrir docs/Plano-Projeto-FEMHELP.docx no Word
+- [ ] Abrir docs/Plano-Projeto-Zela.docx no Word
 ```

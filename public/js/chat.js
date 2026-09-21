@@ -1,7 +1,7 @@
 /**
  * Chat feminino — demo fixo em JSON + mensagens da usuária + respostas simuladas.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const DEFAULT_ROOM_ID = "amizade";
 const LEGACY_STORAGE_KEY = "chat_messages";
@@ -66,7 +66,7 @@ function legacyMessagesStorageKey(roomId) {
 }
 
 function getFallbackCommunity(roomId) {
-  const curated = window.FH.CURATED_COMMUNITIES_FALLBACK;
+  const curated = window.ZL.CURATED_COMMUNITIES_FALLBACK;
   if (Array.isArray(curated)) {
     const found = curated.find((c) => c.id === roomId);
     if (found) return found;
@@ -86,24 +86,24 @@ function getDemoMessages(community) {
 }
 
 function getUserMessages(roomId) {
-  if (!window.FH?.storage) return [];
-  return window.FH.storage.get(userMessagesStorageKey(roomId), []);
+  if (!window.ZL?.storage) return [];
+  return window.ZL.storage.get(userMessagesStorageKey(roomId), []);
 }
 
 function getSimulatedMessages(roomId) {
-  if (!window.FH?.storage) return [];
-  return window.FH.storage.get(simulatedMessagesStorageKey(roomId), []);
+  if (!window.ZL?.storage) return [];
+  return window.ZL.storage.get(simulatedMessagesStorageKey(roomId), []);
 }
 
 function canSendInChat() {
-  if (window.FH.getCurrentUser?.()) return true;
+  if (window.ZL.getCurrentUser?.()) return true;
   if (document.body?.dataset?.page === "chat") return true;
-  return window.FH.demoMode !== false;
+  return window.ZL.demoMode !== false;
 }
 
 function getChatActor() {
   return (
-    window.FH.getCurrentUser?.() || {
+    window.ZL.getCurrentUser?.() || {
       uid: "demo-guest",
       displayName: "Você",
       avatarDataUrl: "",
@@ -111,9 +111,9 @@ function getChatActor() {
   );
 }
 
-window.FH.paintChatSeedsFallback = function (roomId) {
+window.ZL.paintChatSeedsFallback = function (roomId) {
   const listEl = document.getElementById("chat-messages");
-  if (!listEl || listEl.getAttribute("data-fh-has-messages") === "1") return false;
+  if (!listEl || listEl.getAttribute("data-zl-has-messages") === "1") return false;
 
   const community = resolveCommunity(null, roomId || DEFAULT_ROOM_ID);
   const msgs = getDemoMessages(community);
@@ -121,26 +121,26 @@ window.FH.paintChatSeedsFallback = function (roomId) {
 
   const guestUser = getChatActor();
   listEl.innerHTML = msgs.map((msg) => renderMessageBubble(msg, guestUser)).join("");
-  listEl.setAttribute("data-fh-has-messages", "1");
+  listEl.setAttribute("data-zl-has-messages", "1");
   listEl.scrollTop = listEl.scrollHeight;
   return true;
 };
 
 function saveUserMessages(roomId, msgs) {
-  return window.FH.storage.set(userMessagesStorageKey(roomId), msgs);
+  return window.ZL.storage.set(userMessagesStorageKey(roomId), msgs);
 }
 
 function saveSimulatedMessages(roomId, msgs) {
-  return window.FH.storage.set(simulatedMessagesStorageKey(roomId), msgs);
+  return window.ZL.storage.set(simulatedMessagesStorageKey(roomId), msgs);
 }
 
 function fetchCommunityWithTimeout(roomId, timeoutMs = COMMUNITY_FETCH_TIMEOUT_MS) {
-  if (typeof window.FH.getCommunityById !== "function") {
+  if (typeof window.ZL.getCommunityById !== "function") {
     return Promise.resolve(null);
   }
 
   return Promise.race([
-    window.FH.getCommunityById(roomId),
+    window.ZL.getCommunityById(roomId),
     new Promise((resolve) => setTimeout(() => resolve(null), timeoutMs)),
   ]);
 }
@@ -184,28 +184,28 @@ function pickSimulatedReply(community) {
 }
 
 function migrateLegacyMessages(roomId) {
-  if (!window.FH?.storage) return;
+  if (!window.ZL?.storage) return;
 
   const userKey = userMessagesStorageKey(roomId);
-  const legacyRoom = window.FH.storage.get(legacyMessagesStorageKey(roomId), null);
+  const legacyRoom = window.ZL.storage.get(legacyMessagesStorageKey(roomId), null);
   const legacyGlobal = roomId === DEFAULT_ROOM_ID
-    ? window.FH.storage.get(LEGACY_STORAGE_KEY, null)
+    ? window.ZL.storage.get(LEGACY_STORAGE_KEY, null)
     : null;
   const sources = [legacyRoom, legacyGlobal].filter((msgs) => Array.isArray(msgs) && msgs.length > 0);
 
   if (sources.length > 0) {
-    const existingUser = window.FH.storage.get(userKey, []);
+    const existingUser = window.ZL.storage.get(userKey, []);
     if (!existingUser || existingUser.length === 0) {
       const ownMessages = sources.flat().filter((m) => m && m.own);
       if (ownMessages.length > 0) {
-        window.FH.storage.set(userKey, ownMessages);
+        window.ZL.storage.set(userKey, ownMessages);
       }
     }
   }
 
-  window.FH.storage.remove(legacyMessagesStorageKey(roomId));
+  window.ZL.storage.remove(legacyMessagesStorageKey(roomId));
   if (roomId === DEFAULT_ROOM_ID) {
-    window.FH.storage.remove(LEGACY_STORAGE_KEY);
+    window.ZL.storage.remove(LEGACY_STORAGE_KEY);
   }
 }
 
@@ -242,8 +242,8 @@ function getAvatarColor(name) {
 }
 
 function renderOwnMessageAvatar(user) {
-  if (typeof window.FH.getAvatarMarkup === "function" && user) {
-    return `<span class="message-bubble__avatar message-bubble__avatar--profile">${window.FH.getAvatarMarkup(user, "sm")}</span>`;
+  if (typeof window.ZL.getAvatarMarkup === "function" && user) {
+    return `<span class="message-bubble__avatar message-bubble__avatar--profile">${window.ZL.getAvatarMarkup(user, "sm")}</span>`;
   }
 
   const name = user?.displayName || "Você";
@@ -314,8 +314,8 @@ function updateRoomHeader(state) {
 
   if (titleEl) titleEl.textContent = roomName;
   if (subtitleEl) subtitleEl.textContent = roomDescription;
-  if (iconEl && typeof window.FH.icon === "function") {
-    iconEl.innerHTML = window.FH.icon(iconName, "icon icon--shortcut", 24);
+  if (iconEl && typeof window.ZL.icon === "function") {
+    iconEl.innerHTML = window.ZL.icon(iconName, "icon icon--shortcut", 24);
   }
   if (membersEl) {
     const memberText = formatMemberCount(community.memberCount);
@@ -326,14 +326,14 @@ function updateRoomHeader(state) {
       membersEl.hidden = true;
     }
   }
-  document.title = `${roomName} — FEMHELP`;
+  document.title = `${roomName} — Zela`;
 }
 
 let chatPageState = null;
 let pendingRoomId = null;
 let chatInitPromise = null;
 
-const CHAT_BROWSE_TITLE = "Chat feminino — FEMHELP";
+const CHAT_BROWSE_TITLE = "Chat feminino — Zela";
 
 function extractRoomIdFromCard(card) {
   const fromData = card.dataset.roomId;
@@ -412,7 +412,7 @@ function showChatRoomError(message) {
   if (listEl) {
     listEl.innerHTML = `<p class="text-muted" role="alert">${escapeHtml(message)}</p>`;
   }
-  console.error("FEMHELP:", message);
+  console.error("Zela:", message);
 }
 
 function showChatInitError(message) {
@@ -423,12 +423,12 @@ function showChatInitError(message) {
   showChatRoomError(message);
 }
 
-window.FH.showBrowseView = function () {
+window.ZL.showBrowseView = function () {
   chatPageState?.cancelSimulatedReply?.();
   showBrowseViewUI();
 };
 
-window.FH.showChatRoom = async function (newRoomId) {
+window.ZL.showChatRoom = async function (newRoomId) {
   if (!newRoomId) return false;
 
   if (!chatPageState) {
@@ -454,7 +454,7 @@ window.FH.showChatRoom = async function (newRoomId) {
     chatPageState.ensureJoinedState();
     chatPageState.updateParticipationUI();
   } catch (err) {
-    console.warn("FEMHELP: falha ao atualizar participação na sala.", err);
+    console.warn("Zela: falha ao atualizar participação na sala.", err);
     chatPageState.updateParticipationUI?.();
   }
 
@@ -462,7 +462,7 @@ window.FH.showChatRoom = async function (newRoomId) {
   try {
     community = await fetchCommunityWithTimeout(newRoomId);
   } catch (err) {
-    console.warn("FEMHELP: falha ao carregar comunidade, usando fallback.", err);
+    console.warn("Zela: falha ao carregar comunidade, usando fallback.", err);
   }
 
   chatPageState.community = resolveCommunity(community, newRoomId);
@@ -476,7 +476,7 @@ window.FH.showChatRoom = async function (newRoomId) {
   }
 
   document.dispatchEvent(
-    new CustomEvent("femhelp:chat-room-changed", { detail: { roomId: newRoomId } })
+    new CustomEvent("zela:chat-room-changed", { detail: { roomId: newRoomId } })
   );
 
   chatPageState.input?.focus();
@@ -487,22 +487,22 @@ window.FH.showChatRoom = async function (newRoomId) {
   return true;
 };
 
-window.FH.switchChatRoom = window.FH.showChatRoom;
+window.ZL.switchChatRoom = window.ZL.showChatRoom;
 
-window.FH.ensureChatPageReady = function () {
+window.ZL.ensureChatPageReady = function () {
   if (chatPageState) return Promise.resolve(true);
-  return window.FH.initChatPage();
+  return window.ZL.initChatPage();
 };
 
-window.FH.openChatRoom = async function (roomId) {
+window.ZL.openChatRoom = async function (roomId) {
   if (!roomId) return false;
 
   try {
-    const ready = await window.FH.ensureChatPageReady();
+    const ready = await window.ZL.ensureChatPageReady();
     if (!ready) return false;
-    return await window.FH.showChatRoom(roomId);
+    return await window.ZL.showChatRoom(roomId);
   } catch (err) {
-    console.error("FEMHELP: falha ao abrir sala de chat.", err);
+    console.error("Zela: falha ao abrir sala de chat.", err);
     return false;
   }
 };
@@ -512,23 +512,23 @@ function getChatLoginRedirectUrl() {
 }
 
 function redirectToLogin() {
-  const loginUrl = window.FH.asset("auth/login.html");
+  const loginUrl = window.ZL.asset("auth/login.html");
   const redirect = encodeURIComponent(getChatLoginRedirectUrl());
   window.location.href = `${loginUrl}?redirect=${redirect}`;
 }
 
-window.FH.initChatPage = async function () {
+window.ZL.initChatPage = async function () {
   if (chatPageState) return true;
   if (chatInitPromise) return chatInitPromise;
 
   chatInitPromise = (async () => {
-    const initialRoomId = window.FH.getRoomFromUrl?.() || DEFAULT_ROOM_ID;
-    const user = window.FH.getCurrentUser();
+    const initialRoomId = window.ZL.getRoomFromUrl?.() || DEFAULT_ROOM_ID;
+    const user = window.ZL.getCurrentUser();
     const roomFromUrl = new URLSearchParams(window.location.search).get("room");
 
     if (roomFromUrl) {
       const listEl = document.getElementById("chat-messages");
-      if (listEl && listEl.getAttribute("data-fh-has-messages") !== "1") {
+      if (listEl && listEl.getAttribute("data-zl-has-messages") !== "1") {
         showChatLoading();
       }
     }
@@ -581,7 +581,7 @@ window.FH.initChatPage = async function () {
     chatPageState = state;
 
     if (authLoginLink) {
-      const loginUrl = `${window.FH.asset("auth/login.html")}?redirect=${encodeURIComponent(getChatLoginRedirectUrl())}`;
+      const loginUrl = `${window.ZL.asset("auth/login.html")}?redirect=${encodeURIComponent(getChatLoginRedirectUrl())}`;
       authLoginLink.href = loginUrl;
     }
 
@@ -591,7 +591,7 @@ window.FH.initChatPage = async function () {
     }
 
   function isJoined() {
-    return window.FH.isCommunityJoined?.(state.roomId) ?? false;
+    return window.ZL.isCommunityJoined?.(state.roomId) ?? false;
   }
 
   function cancelSimulatedReply() {
@@ -650,7 +650,7 @@ window.FH.initChatPage = async function () {
     try {
       ensureJoinedState();
     } catch (err) {
-      console.warn("FEMHELP: falha ao registrar participação.", err);
+      console.warn("Zela: falha ao registrar participação.", err);
     }
 
     const trimmed = (text || "").trim();
@@ -740,11 +740,11 @@ window.FH.initChatPage = async function () {
 
     if (state.joinedBadge) state.joinedBadge.hidden = !joined;
 
-    const loggedIn = !!window.FH.getCurrentUser();
+    const loggedIn = !!window.ZL.getCurrentUser();
     const canSend = canSendInChat();
 
     if (state.authNoticeEl) {
-      state.authNoticeEl.hidden = !roomVisible || loggedIn || (canSend && window.FH.demoMode);
+      state.authNoticeEl.hidden = !roomVisible || loggedIn || (canSend && window.ZL.demoMode);
     }
 
     if (roomVisible) {
@@ -764,7 +764,7 @@ window.FH.initChatPage = async function () {
       if (state.demoNoticeEl) {
         if (state.storageWarning) {
           state.demoNoticeEl.textContent = state.storageWarning;
-        } else if (!loggedIn && window.FH.demoMode) {
+        } else if (!loggedIn && window.ZL.demoMode) {
           state.demoNoticeEl.textContent =
             "Modo demonstração: você pode enviar mensagens. Faça login para salvar seu perfil e participar com seu nome.";
         } else {
@@ -788,15 +788,15 @@ window.FH.initChatPage = async function () {
     if (state.lastJoinedState !== joined) {
       state.lastJoinedState = joined;
       document.dispatchEvent(
-        new CustomEvent("femhelp:chat-join-changed", { detail: { roomId: state.roomId, joined } })
+        new CustomEvent("zela:chat-join-changed", { detail: { roomId: state.roomId, joined } })
       );
     }
   }
 
   function ensureJoinedState() {
-    if (typeof window.FH.joinCommunity !== "function" || isJoined()) return;
+    if (typeof window.ZL.joinCommunity !== "function" || isJoined()) return;
 
-    if (!window.FH.joinCommunity(state.roomId, { silent: true })) {
+    if (!window.ZL.joinCommunity(state.roomId, { silent: true })) {
       throw new Error("Falha ao salvar participação no chat.");
     }
   }
@@ -824,19 +824,19 @@ window.FH.initChatPage = async function () {
       msgs.map((msg) => renderMessageBubble(msg, state.user)).join("") +
       typingHtml;
     state.listEl.setAttribute(
-      "data-fh-has-messages",
+      "data-zl-has-messages",
       msgs.length > 0 || state.showWelcomeMessage || state.typingAuthor ? "1" : "0"
     );
     state.listEl.scrollTop = state.listEl.scrollHeight;
   }
 
-  document.addEventListener("femhelp:profile-updated", () => {
+  document.addEventListener("zela:profile-updated", () => {
     state.user = getChatActor();
     updateParticipationUI();
     render();
   });
 
-  window.FH.onAuthChange?.(() => {
+  window.ZL.onAuthChange?.(() => {
     state.user = getChatActor();
     updateParticipationUI();
     render();
@@ -849,7 +849,7 @@ window.FH.initChatPage = async function () {
   state.sendUserMessage = sendUserMessage;
   state.handleMessageSend = handleMessageSend;
 
-  window.FH.sendChatMessage = function (text) {
+  window.ZL.sendChatMessage = function (text) {
     if (!chatPageState?.sendUserMessage) return false;
     return chatPageState.sendUserMessage(text);
   };
@@ -858,7 +858,7 @@ window.FH.initChatPage = async function () {
 
   if (backBtn) {
     backBtn.addEventListener("click", () => {
-      window.FH.showBrowseView();
+      window.ZL.showBrowseView();
     });
   }
 
@@ -867,32 +867,32 @@ window.FH.initChatPage = async function () {
     state.roomId = roomFromUrl;
     state.community = resolveCommunity(null, roomFromUrl);
     updateRoomHeader(state);
-    window.FH.paintChatSeedsFallback(roomFromUrl);
+    window.ZL.paintChatSeedsFallback(roomFromUrl);
     state.render();
     state.updateParticipationUI();
 
     try {
-      await window.FH.showChatRoom(roomFromUrl);
+      await window.ZL.showChatRoom(roomFromUrl);
     } catch (err) {
-      console.warn("FEMHELP: falha ao completar abertura da sala, mantendo fallback.", err);
+      console.warn("Zela: falha ao completar abertura da sala, mantendo fallback.", err);
     }
   } else {
-    window.FH.showBrowseView();
+    window.ZL.showBrowseView();
   }
 
   if (pendingRoomId && pendingRoomId !== roomFromUrl) {
     const pending = pendingRoomId;
     pendingRoomId = null;
     try {
-      await window.FH.showChatRoom(pending);
+      await window.ZL.showChatRoom(pending);
     } catch (err) {
-      console.warn("FEMHELP: falha ao abrir sala pendente.", err);
+      console.warn("Zela: falha ao abrir sala pendente.", err);
     }
   } else {
     pendingRoomId = null;
   }
 
-  document.dispatchEvent(new CustomEvent("femhelp:chat-ready"));
+  document.dispatchEvent(new CustomEvent("zela:chat-ready"));
 
   return true;
   })();
@@ -902,7 +902,7 @@ window.FH.initChatPage = async function () {
     if (!ok) chatInitPromise = null;
     return ok;
   } catch (err) {
-    console.error("FEMHELP: falha ao inicializar chat.", err);
+    console.error("Zela: falha ao inicializar chat.", err);
     showChatInitError("Não foi possível inicializar o chat. Recarregue a página.");
     chatInitPromise = null;
     return false;
@@ -913,19 +913,19 @@ function bindChatSendControls() {
   const form = document.getElementById("chat-form");
   const sendBtn = document.getElementById("chat-send-btn");
   const input = document.getElementById("chat-input");
-  if (!form || form.dataset.fhSendBound === "1") return;
-  form.dataset.fhSendBound = "1";
+  if (!form || form.dataset.zlSendBound === "1") return;
+  form.dataset.zlSendBound = "1";
 
   const doSend = async (event) => {
     event?.preventDefault?.();
 
-    if (typeof window.fhSendChatMessage === "function") {
-      window.fhSendChatMessage(event);
+    if (typeof window.zlSendChatMessage === "function") {
+      window.zlSendChatMessage(event);
       return;
     }
 
     if (!chatPageState) {
-      const ready = await window.FH.initChatPage?.();
+      const ready = await window.ZL.initChatPage?.();
       if (!ready || !chatPageState) return;
     }
 
@@ -946,17 +946,17 @@ function bindChatSendControls() {
 
 function startChatPageInit() {
   if (document.body?.dataset?.page !== "chat") return;
-  if (typeof window.FH.initChatPage !== "function") return;
+  if (typeof window.ZL.initChatPage !== "function") return;
 
   const roomFromUrl = new URLSearchParams(window.location.search).get("room");
   if (roomFromUrl) {
-    window.FH.paintChatSeedsFallback?.(roomFromUrl);
+    window.ZL.paintChatSeedsFallback?.(roomFromUrl);
   }
 
-  window.FH.initChatPage();
+  window.ZL.initChatPage();
 }
 
-document.addEventListener("femhelp:ready", () => {
+document.addEventListener("zela:ready", () => {
   startChatPageInit();
   setTimeout(() => {
     if (!chatPageState) startChatPageInit();
@@ -973,7 +973,7 @@ if (document.readyState !== "loading") {
     "DOMContentLoaded",
     () => {
       const roomFromUrl = new URLSearchParams(window.location.search).get("room");
-      if (roomFromUrl) window.FH.paintChatSeedsFallback?.(roomFromUrl);
+      if (roomFromUrl) window.ZL.paintChatSeedsFallback?.(roomFromUrl);
       bindChatSendControls();
     },
     { once: true }

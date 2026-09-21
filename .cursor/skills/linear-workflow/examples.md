@@ -1,10 +1,10 @@
-# Exemplos — Linear FEMHELP
+# Exemplos — Linear Zela
 
 ## Buscar issue antes de trabalhar
 
 Pedido da usuária: *"Vou implementar o botão SOS"*
 
-1. `list_issues` → `project: FEMHELP`, `query: SOS`
+1. `list_issues` → `project: Zela`, `query: SOS`
 2. Encontrou `TCC-32` → usar essa issue
 3. `save_issue` → `id: TCC-32`, `state: In Progress`
 4. Branch: `feat/heloise/tcc-32-botao-sos`
@@ -70,8 +70,8 @@ Epic pai: `TCC-9` (SOS e rede de emergência)
 
 ```text
 title: Validar fluxo SOS em dispositivo Android antigo
-team: Tcc-femhelp
-project: FEMHELP
+team: Tcc-zela
+project: Zela
 parentId: TCC-9
 labels: [test, feat]
 milestone: M3-Testes
@@ -100,7 +100,7 @@ description:
 ## Como validar
 - [ ] Itens do critério de aceite em TCC-32
 
-Linear: https://linear.app/tcc-femhelp/issue/TCC-32/botao-sos-com-confirmacao-anti-acionamento-acidental
+Linear: https://linear.app/tcc-zela/issue/TCC-32/botao-sos-com-confirmacao-anti-acionamento-acidental
 ```
 
 ## Commit citando issue

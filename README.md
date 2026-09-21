@@ -1,12 +1,12 @@
-# FEMHELP
+# Zela
 
-Plataforma de apoio, acolhimento e segurança feminina — TCC de Análise e Desenvolvimento de Sistemas (Escola Raul Brasil).
+**Zela por ela** — plataforma de apoio, acolhimento e segurança feminina. TCC de Análise e Desenvolvimento de Sistemas (Escola Raul Brasil).
 
 **Equipe:** Heloise Vitoria · Lia Isiye · Geovana Pinto Ferreira
 
 Este repositório concentra a **documentação do plano** e o **código do aplicativo web** (pasta `public/`).
 
-Documentação acadêmica completa (texto organizado, sem duplicatas do material original): [docs/Plano-Projeto-FEMHELP.docx](docs/Plano-Projeto-FEMHELP.docx). O mesmo conteúdo em Markdown, usado para gerar o DOCX, está em [docs/conteudo-plano.md](docs/conteudo-plano.md). A fonte original em PDF permanece em [tcc.pdf](tcc.pdf).
+Documentação acadêmica completa (texto organizado, sem duplicatas do material original): [docs/Plano-Projeto-Zela.docx](docs/Plano-Projeto-Zela.docx). O mesmo conteúdo em Markdown, usado para gerar o DOCX, está em [docs/conteudo-plano.md](docs/conteudo-plano.md). A fonte original em PDF permanece em [tcc.pdf](tcc.pdf).
 
 ## Executar o app localmente
 
@@ -18,12 +18,12 @@ Abra `http://localhost:3000`. O app roda em **modo demonstração** com `localSt
 
 ## Deploy
 
-- **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`. URL: https://kivizii.github.io/tcc-femhelp/ (requer Pages habilitado em Settings → Source: GitHub Actions).
+- **GitHub Pages:** workflow em [`.github/workflows/pages.yml`](.github/workflows/pages.yml) — publica a pasta `public/` ao fazer merge em `main`. URL: https://kivizii.github.io/tcc-zela/ (requer Pages habilitado em Settings → Source: GitHub Actions).
 - **Firebase Hosting:** `firebase deploy --only hosting` (requer Firebase CLI e projeto configurado).
 
 ## Sumário
 
-- [O que é a FEMHELP](#o-que-é-a-femhelp)
+- [O que é a Zela](#o-que-é-a-zela)
 - [Funcionalidades principais](#funcionalidades-principais)
 - [Público-alvo e enquadramento legal](#público-alvo-e-enquadramento-legal)
 - [Identidade visual e UX](#identidade-visual-e-ux)
@@ -34,9 +34,9 @@ Abra `http://localhost:3000`. O app roda em **modo demonstração** com `localSt
 - [Executar o app](#executar-o-app-localmente)
 - [Status do repositório](#status-do-repositório)
 
-## O que é a FEMHELP
+## O que é a Zela
 
-A FEMHELP é uma proposta de plataforma digital (e rede de apoio) para que mulheres se sintam protegidas, valorizadas, ouvidas e capazes de reconstruir a vida com dignidade. A missão combina **tecnologia**, **acolhimento** e **segurança**.
+A Zela é uma proposta de plataforma digital (e rede de apoio) para que mulheres se sintam protegidas, valorizadas, ouvidas e capazes de reconstruir a vida com dignidade. A missão combina **tecnologia**, **acolhimento** e **segurança**.
 
 **Visão:** tornar-se uma das principais plataformas de apoio feminino no Brasil e, futuramente, no mundo, reconhecida por inovação, acolhimento e impacto social.
 
@@ -114,7 +114,7 @@ Melhorias futuras (detalhadas no DOCX):
 
 ## Backlog no Linear
 
-O planejamento de implementação (epics, tarefas, milestones e prioridades) está no **Linear**, no projeto [FEMHELP](https://linear.app/tcc-femhelp/project/femhelp-d9fb9ef10605), team **Tcc-femhelp**.
+O planejamento de implementação (epics, tarefas, milestones e prioridades) está no **Linear**, no projeto [Zela](https://linear.app/tcc-zela/project/zela-d9fb9ef10605), team **Tcc-zela**.
 
 | Milestone | Foco |
 | --- | --- |
@@ -148,4 +148,4 @@ Fluxo de issues (andamento, conclusões, integração com Git): skill [`.cursor/
 | Testes | 📋 Checklist em [docs/testes-checklist.md](docs/testes-checklist.md) |
 | Defesa | 📋 Roteiro em [docs/roteiro-defesa.md](docs/roteiro-defesa.md) |
 
-Para o texto acadêmico completo (conclusões, aprendizados, exemplos de uso e detalhamento de testes), use o [DOCX](docs/Plano-Projeto-FEMHELP.docx).
+Para o texto acadêmico completo (conclusões, aprendizados, exemplos de uso e detalhamento de testes), use o [DOCX](docs/Plano-Projeto-Zela.docx).

@@ -1,7 +1,7 @@
 /**
  * Perfil da usuária — avatar, modal e helpers de exibição.
  */
-window.FH = window.FH || {};
+window.ZL = window.ZL || {};
 
 const AVATAR_COLORS = [
   "var(--color-rosa)",
@@ -48,16 +48,16 @@ function getAvatarColor(name) {
 
 function resolveUid(uid) {
   if (uid) return uid;
-  const user = window.FH.getCurrentUser?.();
+  const user = window.ZL.getCurrentUser?.();
   return user?.uid || null;
 }
 
-window.FH.getUserProfile = function (uid) {
+window.ZL.getUserProfile = function (uid) {
   const resolvedUid = resolveUid(uid);
   if (!resolvedUid) return null;
 
-  const stored = window.FH.storage.get(profileStorageKey(resolvedUid), {});
-  const user = window.FH.getCurrentUser?.();
+  const stored = window.ZL.storage.get(profileStorageKey(resolvedUid), {});
+  const user = window.ZL.getCurrentUser?.();
 
   return {
     uid: resolvedUid,
@@ -69,12 +69,12 @@ window.FH.getUserProfile = function (uid) {
   };
 };
 
-window.FH.saveUserProfile = function (patch = {}) {
+window.ZL.saveUserProfile = function (patch = {}) {
   const uid = resolveUid(patch.uid);
   if (!uid) throw new Error("Faça login para salvar o perfil.");
 
-  const user = window.FH.getCurrentUser?.();
-  const current = window.FH.storage.get(profileStorageKey(uid), {});
+  const user = window.ZL.getCurrentUser?.();
+  const current = window.ZL.storage.get(profileStorageKey(uid), {});
   const seeded = user
     ? {
         displayName: current.displayName || user.displayName || "",
@@ -85,10 +85,10 @@ window.FH.saveUserProfile = function (patch = {}) {
     : current;
   const next = { ...seeded, ...patch };
   delete next.uid;
-  window.FH.storage.set(profileStorageKey(uid), next);
-  window.FH.renderHeaderAvatar?.();
-  document.dispatchEvent(new CustomEvent("femhelp:profile-updated", { detail: { uid } }));
-  return window.FH.getUserProfile(uid);
+  window.ZL.storage.set(profileStorageKey(uid), next);
+  window.ZL.renderHeaderAvatar?.();
+  document.dispatchEvent(new CustomEvent("zela:profile-updated", { detail: { uid } }));
+  return window.ZL.getUserProfile(uid);
 };
 
 function loadImageFromFile(file) {
@@ -145,15 +145,15 @@ async function resizeAvatarFile(file) {
   return dataUrl;
 }
 
-window.FH.setUserAvatar = async function (file) {
+window.ZL.setUserAvatar = async function (file) {
   if (!file) throw new Error("Nenhuma imagem selecionada.");
   const dataUrl = await resizeAvatarFile(file);
-  return window.FH.saveUserProfile({ avatarDataUrl: dataUrl });
+  return window.ZL.saveUserProfile({ avatarDataUrl: dataUrl });
 };
 
-window.FH.getAvatarMarkup = function (userOrProfile, size = "sm") {
+window.ZL.getAvatarMarkup = function (userOrProfile, size = "sm") {
   const profile = userOrProfile?.uid
-    ? window.FH.getUserProfile(userOrProfile.uid) || userOrProfile
+    ? window.ZL.getUserProfile(userOrProfile.uid) || userOrProfile
     : userOrProfile;
   const displayName = profile?.displayName || "Usuária";
   const initials = getAuthorInitials(displayName);
@@ -174,7 +174,7 @@ function bindAvatarFileInput(input, onSuccess, onError) {
     if (!file) return;
 
     try {
-      await window.FH.setUserAvatar(file);
+      await window.ZL.setUserAvatar(file);
       onSuccess?.();
     } catch (err) {
       onError?.(err);
@@ -186,17 +186,17 @@ function closeProfileModal() {
   document.getElementById("profile-modal-overlay")?.remove();
 }
 
-window.FH.showProfileModal = function () {
-  const user = window.FH.getCurrentUser();
+window.ZL.showProfileModal = function () {
+  const user = window.ZL.getCurrentUser();
   if (!user) {
-    window.location.href = window.FH.asset("auth/login.html");
+    window.location.href = window.ZL.asset("auth/login.html");
     return;
   }
 
   closeProfileModal();
-  const profile = window.FH.getUserProfile(user.uid);
-  const cpfLine = profile.cpf && window.FH.maskCpfDisplay
-    ? `<p class="profile-modal__meta text-muted">CPF: ${escapeHtml(window.FH.maskCpfDisplay(profile.cpf))}</p>`
+  const profile = window.ZL.getUserProfile(user.uid);
+  const cpfLine = profile.cpf && window.ZL.maskCpfDisplay
+    ? `<p class="profile-modal__meta text-muted">CPF: ${escapeHtml(window.ZL.maskCpfDisplay(profile.cpf))}</p>`
     : "";
 
   const overlay = document.createElement("div");
@@ -209,7 +209,7 @@ window.FH.showProfileModal = function () {
     <div class="modal profile-modal">
       <button type="button" class="profile-modal__close btn btn--ghost" aria-label="Fechar perfil">×</button>
       <div class="profile-modal__avatar-wrap">
-        ${window.FH.getAvatarMarkup(profile, "lg")}
+        ${window.ZL.getAvatarMarkup(profile, "lg")}
       </div>
       <h2 class="profile-modal__title" id="profile-modal-title">${escapeHtml(profile.displayName || "Bem-vinda")}</h2>
       ${profile.email ? `<p class="profile-modal__meta text-muted">${escapeHtml(profile.email)}</p>` : ""}
@@ -217,8 +217,8 @@ window.FH.showProfileModal = function () {
       <input type="file" id="profile-avatar-input" accept="image/*" hidden>
       <div class="profile-modal__actions">
         <button type="button" class="btn btn--primary btn--block" id="profile-change-photo">Alterar foto</button>
-        <a href="${window.FH.asset("community/notas.html")}" class="btn btn--ghost btn--block">Notas da comunidade</a>
-        <a href="${window.FH.asset("settings.html")}" class="btn btn--ghost btn--block">Configurações</a>
+        <a href="${window.ZL.asset("community/notas.html")}" class="btn btn--ghost btn--block">Notas da comunidade</a>
+        <a href="${window.ZL.asset("settings.html")}" class="btn btn--ghost btn--block">Configurações</a>
       </div>
     </div>
   `;
@@ -245,8 +245,8 @@ window.FH.showProfileModal = function () {
   bindAvatarFileInput(
     fileInput,
     () => {
-      const updated = window.FH.getUserProfile(user.uid);
-      overlay.querySelector(".profile-modal__avatar-wrap").innerHTML = window.FH.getAvatarMarkup(updated, "lg");
+      const updated = window.ZL.getUserProfile(user.uid);
+      overlay.querySelector(".profile-modal__avatar-wrap").innerHTML = window.ZL.getAvatarMarkup(updated, "lg");
     },
     (err) => {
       alert(err.message || "Não foi possível atualizar a foto.");
@@ -257,38 +257,38 @@ window.FH.showProfileModal = function () {
   changePhotoBtn.focus();
 };
 
-window.FH.renderHeaderAvatar = function () {
+window.ZL.renderHeaderAvatar = function () {
   const slot = document.getElementById("header-avatar-slot");
   if (!slot) return;
 
-  const user = window.FH.getCurrentUser();
+  const user = window.ZL.getCurrentUser();
 
   if (user) {
-    const profile = window.FH.getUserProfile(user.uid);
+    const profile = window.ZL.getUserProfile(user.uid);
     slot.innerHTML = `
       <button type="button" class="header-avatar-btn" id="header-avatar-btn" aria-label="Ver meu perfil">
-        ${window.FH.getAvatarMarkup(profile, "sm")}
+        ${window.ZL.getAvatarMarkup(profile, "sm")}
       </button>`;
     slot.querySelector("#header-avatar-btn")?.addEventListener("click", () => {
-      window.FH.showProfileModal();
+      window.ZL.showProfileModal();
     });
     return;
   }
 
   slot.innerHTML = `
-    <a href="${window.FH.asset("auth/login.html")}" class="header-avatar-btn header-avatar-btn--guest" aria-label="Entrar na conta">
-      ${window.FH.getAvatarMarkup({ displayName: "?" }, "sm")}
+    <a href="${window.ZL.asset("auth/login.html")}" class="header-avatar-btn header-avatar-btn--guest" aria-label="Entrar na conta">
+      ${window.ZL.getAvatarMarkup({ displayName: "?" }, "sm")}
     </a>`;
 };
 
-document.addEventListener("femhelp:ready", () => {
-  window.FH.renderHeaderAvatar();
-  window.FH.onAuthChange?.(() => {
-    window.FH.renderHeaderAvatar();
-    window.FH.updateHeaderAuth?.();
+document.addEventListener("zela:ready", () => {
+  window.ZL.renderHeaderAvatar();
+  window.ZL.onAuthChange?.(() => {
+    window.ZL.renderHeaderAvatar();
+    window.ZL.updateHeaderAuth?.();
   });
 });
 
-document.addEventListener("femhelp:profile-updated", () => {
-  window.FH.renderHeaderAvatar();
+document.addEventListener("zela:profile-updated", () => {
+  window.ZL.renderHeaderAvatar();
 });

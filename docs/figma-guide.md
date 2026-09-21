@@ -1,8 +1,8 @@
-# Guia Figma — FEMHELP
+# Guia Figma — Zela
 
-Especificação para criar o arquivo Figma do zero, espelhando [`public/css/tokens.css`](../public/css/tokens.css) e [`docs/design-system.md`](design-system.md).
+**Zela por ela** — especificação para criar o arquivo Figma do zero, espelhando [`public/css/tokens.css`](../public/css/tokens.css) e [`docs/design-system.md`](design-system.md).
 
-**Issue Linear:** [TCC-67](https://linear.app/tcc-femhelp/issue/TCC-67/criar-arquivo-figma-com-design-tokens-e-componentes-base)
+**Issue Linear:** [TCC-67](https://linear.app/tcc-zela/issue/TCC-67/criar-arquivo-figma-com-design-tokens-e-componentes-base)
 
 **Arquivos de apoio no repositório:**
 
@@ -20,7 +20,7 @@ Especificação para criar o arquivo Figma do zero, espelhando [`public/css/toke
 
 1. Acesse [figma.com](https://www.figma.com) e faça login.
 2. **Drafts** → **New design file**.
-3. Renomeie para **FEMHELP — Design System**.
+3. Renomeie para **Zela — Design System**.
 4. Crie 4 páginas (botão `+` ao lado de Page 1):
    - `01 Tokens`
    - `02 Componentes`
@@ -63,8 +63,8 @@ Especificação para criar o arquivo Figma do zero, espelhando [`public/css/toke
 2. No explorador de arquivos, arraste todos os `.svg` de `public/assets/icons/` para o canvas.
 3. Organize em grid 4×3 com espaçamento de 24px.
 4. Na página `02 Componentes`, importe também:
-   - `public/assets/logo/femhelp-wordmark.svg`
-   - `public/assets/logo/femhelp-icon.svg`
+   - `public/assets/logo/zela-wordmark.svg`
+   - `public/assets/logo/zela-icon.svg`
 
 ### 5. Montar componentes (página `02 Componentes`)
 
@@ -110,7 +110,7 @@ Use instâncias dos componentes da página 2 (não duplique estilos soltos).
 3. Copie o link.
 4. Cole o link em:
    - `docs/design-system.md` (seção Figma)
-   - Comentário na issue [TCC-67](https://linear.app/tcc-femhelp/issue/TCC-67)
+   - Comentário na issue [TCC-67](https://linear.app/tcc-zela/issue/TCC-67)
 5. Marque TCC-67 como **Done** no Linear.
 
 **Quando tiver o link**, envie aqui no chat que atualizamos o `design-system.md` automaticamente.
